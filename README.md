@@ -14,3 +14,9 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+## Model
+
+The model used for this project was downloaded from [tfhub.dev](https://tfhub.dev/tensorflow/lite-model/mobilenet_v1_1.0_224_quantized/1/metadata/1).
+
+The model is used according to the [Apache 2.0 license](https://opensource.org/licenses/Apache-2.0).
