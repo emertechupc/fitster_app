@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'views/object_detector.dart';
+import 'views/object_detector_view.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
