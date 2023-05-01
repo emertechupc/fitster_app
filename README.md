@@ -1,6 +1,8 @@
-# fitster_demo
+# Fitster Demo
 
-A new Flutter project.
+Fitster demo app, using Flutter and ML Kit.
+
+This app demonstrates the possibilities of using Object Recognition for a virtual dresser.
 
 ## Getting Started
 
