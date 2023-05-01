@@ -46,8 +46,20 @@ class _ObjectDetectorViewState extends State<ObjectDetectorView> {
   }
 
   Future<void> _initializeDetector() async {
-    final options = ObjectDetectorOptions(
+    // uncomment next lines to use default model
+    // final options = ObjectDetectorOptions(
+    //   mode: DetectionMode.stream,
+    //   classifyObjects: true,
+    //   multipleObjects: true,
+    // );
+    // _objectDetector = ObjectDetector(options: options);
+
+    // uncomment next lines to use custom model
+    const path = 'assets/mobilenet_v1_1.0_224_quantized_1_metadata_1.tflite';
+    const modelPath = 'flutter_assets/$path';
+    final options = LocalObjectDetectorOptions(
       mode: DetectionMode.stream,
+      modelPath: modelPath,
       classifyObjects: true,
       multipleObjects: true,
     );
