@@ -22,12 +22,14 @@ enum CameraViewStatus {
 class CameraView extends StatefulWidget {
   final String title;
   final Function(InputImage inputImage) onImage;
+  final CustomPaint? customPaint;
   final CameraLensDirection initialDirection;
 
   const CameraView({
     super.key,
     required this.title,
     required this.onImage,
+    this.customPaint,
     this.initialDirection = CameraLensDirection.back,
   });
 
@@ -112,11 +114,17 @@ class _CameraViewState extends State<CameraView> {
 
     return Container(
       color: Colors.black,
-      child: Transform.scale(
-        scale: scale,
-        child: Center(
-          child: CameraPreview(_controller!),
-        ),
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          Transform.scale(
+            scale: scale,
+            child: Center(
+              child: CameraPreview(_controller!),
+            ),
+          ),
+          if (widget.customPaint != null) widget.customPaint!
+        ],
       ),
     );
   }
