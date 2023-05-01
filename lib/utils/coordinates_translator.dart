@@ -10,8 +10,9 @@ double translateX(
 ) {
   switch (rotation) {
     case InputImageRotation.rotation90deg:
-    case InputImageRotation.rotation270deg:
       return x * size.width / absoluteImageSize.height;
+    case InputImageRotation.rotation270deg:
+      return size.width - x * size.width / absoluteImageSize.height;
     default:
       return x * size.width / absoluteImageSize.width;
   }

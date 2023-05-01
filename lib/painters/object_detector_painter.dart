@@ -22,6 +22,13 @@ class ObjectDetectorPainter extends CustomPainter {
     final background = Paint()..color = const Color(0x99000000);
 
     for (final detection in _objects) {
+      final box = detection.boundingBox;
+      final left = translateX(box.left, rotation, size, absoluteSize);
+      final top = translateY(box.top, rotation, size, absoluteSize);
+      final right = translateX(box.right, rotation, size, absoluteSize);
+      final bottom = translateY(box.bottom, rotation, size, absoluteSize);
+
+      canvas.drawRect(Rect.fromLTRB(left, top, right, bottom), paint);
       final builder = ParagraphBuilder(
         ParagraphStyle(
           textAlign: TextAlign.left,
@@ -40,17 +47,17 @@ class ObjectDetectorPainter extends CustomPainter {
 
       builder.pop();
 
-      final box = detection.boundingBox;
-      final left = translateX(box.left, rotation, size, absoluteSize);
-      final top = translateY(box.top, rotation, size, absoluteSize);
-      final right = translateX(box.right, rotation, size, absoluteSize);
-      final bottom = translateY(box.bottom, rotation, size, absoluteSize);
-
-      canvas.drawRect(Rect.fromLTRB(left, top, right, bottom), paint);
+      final width = rotation == InputImageRotation.rotation270deg
+          ? left - right
+          : right - left;
 
       final paragraph = builder.build()
-        ..layout(ParagraphConstraints(width: right - left));
-      final offset = Offset(left, top);
+        ..layout(ParagraphConstraints(width: width));
+
+      final offset = rotation == InputImageRotation.rotation270deg
+          ? Offset(right, top)
+          : Offset(left, top);
+
       canvas.drawParagraph(paragraph, offset);
     }
   }
