@@ -1,8 +1,8 @@
-import 'package:fitster_poc/painters/object_detector_painter.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_object_detection/google_mlkit_object_detection.dart';
 
+import '../painters/object_detector_painter.dart';
 import 'camera_view.dart';
 
 class ObjectDetectorView extends StatefulWidget {
