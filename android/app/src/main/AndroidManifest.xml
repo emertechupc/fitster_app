@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.dalbitresb.fitster_poc">
+    package="com.dalbitresb.fitster_demo">
    <application
-        android:label="fitster_poc"
+        android:label="fitster_demo"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

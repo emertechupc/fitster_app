@@ -1,4 +1,4 @@
-# fitster_poc
+# fitster_demo
 
 A new Flutter project.
 

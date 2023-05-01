@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'dart:ui' as ui;
 
-import 'package:fitster_poc/utils/coordinates_translator.dart';
+import 'package:fitster_demo/utils/coordinates_translator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_object_detection/google_mlkit_object_detection.dart';
 
