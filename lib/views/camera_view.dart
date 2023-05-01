@@ -61,12 +61,28 @@ class _CameraViewState extends State<CameraView> {
       appBar: AppBar(
         title: Text(widget.title),
         actions: [
+          if (_status.isLive)
+            Padding(
+              padding: const EdgeInsets.only(right: 16),
+              child: GestureDetector(
+                onTap: _stopLiveFeed,
+                child: const Icon(Icons.stop),
+              ),
+            ),
+          if (_status.isStopped)
+            Padding(
+              padding: const EdgeInsets.only(right: 16),
+              child: GestureDetector(
+                onTap: _startLiveFeed,
+                child: const Icon(Icons.play_arrow),
+              ),
+            ),
           if (_status.isUsable && _cameras!.length > 1)
             Padding(
               padding: const EdgeInsets.only(right: 16),
               child: GestureDetector(
                 onTap: _switchLiveCamera,
-                child: const Icon(Icons.flip_camera_android_outlined, size: 48),
+                child: const Icon(Icons.flip_camera_android_outlined),
               ),
             ),
         ],
