@@ -25,7 +25,7 @@ class ObjectDetectorPainter extends CustomPainter {
       final builder = ParagraphBuilder(
         ParagraphStyle(
           textAlign: TextAlign.left,
-          fontSize: 16,
+          fontSize: 14,
           textDirection: TextDirection.ltr,
         ),
       );
@@ -34,7 +34,7 @@ class ObjectDetectorPainter extends CustomPainter {
         ui.TextStyle(color: Colors.lightGreenAccent, background: background),
       );
 
-      for (final label in detection.labels) {
+      for (final label in detection.labels.take(3)) {
         builder.addText('${label.text} ${label.confidence}\n');
       }
 
