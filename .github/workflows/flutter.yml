@@ -21,6 +21,9 @@ jobs:
           - target: appbundle
             version: release
             path: build/app/outputs/bundle/release
+        exclude:
+          - target: appbundle
+            version: debug
     steps:
       - uses: actions/checkout@v3
       - name: Setup Java (Temurin 17)
