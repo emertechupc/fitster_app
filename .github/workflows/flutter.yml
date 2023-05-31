@@ -1,0 +1,79 @@
+name: Flutter
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    name: 'Build (version: ${{ matrix.version }}, target: ${{ matrix.target }})'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        target: ['apk', 'appbundle']
+        version: ['debug', 'release']
+        include:
+          - target: apk
+            path: build/app/outputs/flutter-apk
+          - target: appbundle
+            version: release
+            path: build/app/outputs/bundle/release
+        exclude:
+          - target: appbundle
+            version: debug
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Java (Temurin 17)
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'gradle'
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+      - name: Verify Flutter instalation
+        run: flutter doctor -v
+      - name: Fetch dependencies
+        run: flutter pub get
+      - name: Build ${{ matrix.version }} version
+        run: flutter build ${{ matrix.target }} --${{ matrix.version }}
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: fitster_demo-${{ matrix.target }}-${{ matrix.version }}
+          path: ${{ matrix.path }}
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+      - name: Fetch dependencies
+        run: flutter pub get
+      - name: Run the Dart and Flutter analyzer
+        run: flutter analyze
+      - name: Ensure the Dart code is formatted correctly
+        run: dart format --set-exit-if-changed --output none .
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    if: false
+    needs: [build]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+      - name: Fetch dependencies
+        run: flutter pub get
+      - name: Run unit tests
+        run: flutter test
