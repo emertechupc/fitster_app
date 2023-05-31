@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'views/item_view.dart';
 import 'views/object_detector_view.dart';
 
 void main() {
@@ -21,7 +22,7 @@ class FitsterApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const ObjectDetectorView(title: title),
+      home: ItemView(),
     );
   }
 }
