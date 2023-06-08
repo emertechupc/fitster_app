@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:google_mlkit_object_detection/google_mlkit_object_detection.dart';
+import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
 
 double translateX(
   double x,
