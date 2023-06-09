@@ -23,7 +23,7 @@ class FitsterApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       //home: const ObjectDetectorView(title: title),
-      home: ClothingListView(),
+      home: const ClothingListView(),
     );
   }
 }
