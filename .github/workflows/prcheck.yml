@@ -12,6 +12,8 @@ jobs:
   title-check:
     name: Title follows Conventional Commits rules
     runs-on: ubuntu-latest
+    permissions:
+      statuses: write
     steps:
       - uses: aslafy-z/conventional-pr-title-action@v3
         env:
