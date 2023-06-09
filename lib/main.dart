@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'views/pose_detector_view.dart';
+import 'views/clothing_list_view.dart';
+//import 'views/object_detector_view.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +22,8 @@ class FitsterApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const PoseDetectorView(title: title),
+      //home: const ObjectDetectorView(title: title),
+      home: ClothingListView(),
     );
   }
 }
