@@ -92,6 +92,6 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
 
 flutter_launcher_icons:
-  image_path_android: 'assets/logo.png'
+  image_path_android: 'assets/logo-cut.png'
   android: true
   min_sdk_android: 21
