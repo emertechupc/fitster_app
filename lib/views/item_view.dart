@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
+import 'pose_detector_view.dart';
+
 class ItemView extends StatefulWidget {
   const ItemView({super.key});
 
@@ -98,7 +100,14 @@ class _ItemViewState extends State<ItemView> {
                     .toList(),
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const PoseDetectorView(),
+                    ),
+                  );
+                },
                 child: const Text('Try on', style: TextStyle(fontSize: 14)),
               ),
             ],

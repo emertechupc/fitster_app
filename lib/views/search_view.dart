@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../utils/item_list.dart';
 
-class SearchScreen extends StatelessWidget {
-  const SearchScreen({super.key});
+class SearchView extends StatelessWidget {
+  const SearchView({super.key});
 
   static const List<String> genders = [
     'Male',
