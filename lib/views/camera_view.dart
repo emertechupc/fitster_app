@@ -20,14 +20,12 @@ enum CameraViewStatus {
 }
 
 class CameraView extends StatefulWidget {
-  final String title;
   final Function(InputImage inputImage) onImage;
   final CustomPaint? customPaint;
   final CameraLensDirection initialDirection;
 
   const CameraView({
     super.key,
-    required this.title,
     required this.onImage,
     this.customPaint,
     this.initialDirection = CameraLensDirection.back,
@@ -61,7 +59,7 @@ class _CameraViewState extends State<CameraView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: const Text('Fitster'),
         actions: [
           if (_status.isLive)
             Padding(
@@ -196,13 +194,15 @@ class _CameraViewState extends State<CameraView> {
   Future<void> _stopLiveFeed() async {
     if (!_status.isLive) return;
 
-    setState(() {
-      _status = CameraViewStatus.stopped;
-    });
-
     await _controller?.stopImageStream();
     await _controller?.dispose();
     _controller = null;
+
+    if (mounted) {
+      setState(() {
+        _status = CameraViewStatus.stopped;
+      });
+    }
   }
 
   Future<void> _processImageStream(CameraImage image) async {

@@ -6,12 +6,7 @@ import '../painters/pose_painter.dart';
 import 'camera_view.dart';
 
 class PoseDetectorView extends StatefulWidget {
-  final String title;
-
-  const PoseDetectorView({
-    super.key,
-    required this.title,
-  });
+  const PoseDetectorView({super.key});
 
   @override
   State<PoseDetectorView> createState() => _PoseDetectorViewState();
@@ -39,7 +34,6 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   @override
   Widget build(BuildContext context) {
     return CameraView(
-      title: widget.title,
       onImage: processImage,
       customPaint: _customPaint,
     );
