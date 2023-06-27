@@ -60,43 +60,34 @@ class SearchScreen extends StatelessWidget {
           //   ),
           // ),
           ItemList(items: _genders),
-          const Padding(
-            padding: EdgeInsets.only(left: 16.0),
-            child: Text(
-              'Brands',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: Color(0xFF4B64F2),
-              ),
-            ),
-          ),
+          _SectionTitle(child: Text('Brands')),
           ItemList(items: _brands),
-          const Padding(
-            padding: EdgeInsets.only(left: 16.0),
-            child: Text(
-              'Styles',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: Color(0xFF4B64F2),
-              ),
-            ),
-          ),
+          _SectionTitle(child: Text('Styles')),
           ItemList(items: _styles),
-          const Padding(
-            padding: EdgeInsets.only(left: 16.0),
-            child: Text(
-              'Types',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: Color(0xFF4B64F2),
-              ),
-            ),
-          ),
+          _SectionTitle(child: Text('Types')),
           ItemList(items: _types),
         ],
+      ),
+    );
+  }
+}
+
+class _SectionTitle extends StatelessWidget {
+  final Widget child;
+
+  const _SectionTitle({required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 16.0),
+      child: DefaultTextStyle(
+        style: const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+          color: Color(0xFF4B64F2),
+        ),
+        child: child,
       ),
     );
   }
