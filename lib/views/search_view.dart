@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import '../utils/item_list.dart';
 
 class SearchScreen extends StatelessWidget {
-  SearchScreen({super.key});
+  const SearchScreen({super.key});
 
-  final List _genders = [
+  static const List<String> genders = [
     'Male',
     'Unisex',
     'Female',
   ];
 
-  final List _brands = [
+  static const List<String> brands = [
     'Gucci',
     'Nike',
     'Adidas',
@@ -20,7 +20,7 @@ class SearchScreen extends StatelessWidget {
     'Tommy Hilfiger',
   ];
 
-  final List _styles = [
+  static const List<String> styles = [
     'Sports',
     'Elegant',
     'Casual',
@@ -29,7 +29,7 @@ class SearchScreen extends StatelessWidget {
     'Vintage',
   ];
 
-  final List _types = [
+  static const List<String> types = [
     'T-shirts',
     'Shirts',
     'Suits',
@@ -46,7 +46,7 @@ class SearchScreen extends StatelessWidget {
           'Fitster',
         ),
       ),
-      body: Column(
+      body: const Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -59,13 +59,13 @@ class SearchScreen extends StatelessWidget {
           //     hintText: 'Search...',
           //   ),
           // ),
-          ItemList(items: _genders),
+          ItemList(items: genders),
           _SectionTitle(child: Text('Brands')),
-          ItemList(items: _brands),
+          ItemList(items: brands),
           _SectionTitle(child: Text('Styles')),
-          ItemList(items: _styles),
+          ItemList(items: styles),
           _SectionTitle(child: Text('Types')),
-          ItemList(items: _types),
+          ItemList(items: types),
         ],
       ),
     );

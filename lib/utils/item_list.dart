@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class Item extends StatelessWidget {
+class _Item extends StatelessWidget {
   final String child;
 
-  const Item({super.key, required this.child});
+  const _Item({required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class Item extends StatelessWidget {
 }
 
 class ItemList extends StatefulWidget {
-  final List items;
+  final List<String> items;
   const ItemList({super.key, required this.items});
 
   @override
@@ -45,7 +45,7 @@ class _ItemListState extends State<ItemList> {
       child: ListView.builder(
         itemCount: widget.items.length,
         itemBuilder: (context, index) {
-          return Item(child: widget.items[index]);
+          return _Item(child: widget.items[index]);
         },
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.all(8),
