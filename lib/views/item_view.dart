@@ -1,13 +1,17 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class ItemView extends StatefulWidget {
+  const ItemView({super.key});
+
   @override
   State<ItemView> createState() => _ItemViewState();
 }
 
 class _ItemViewState extends State<ItemView> {
+  void onSizeChange(String size) {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,22 +23,28 @@ class _ItemViewState extends State<ItemView> {
           padding: const EdgeInsets.all(20.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Image(image: AssetImage("assets/men1.jpg")),
-              Text.rich(
-                TextSpan(
-                  children: <TextSpan>[
-                    TextSpan(text: "Men's t-shirt        ", style: TextStyle(
-                        fontSize: 30.0,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold
-                    )),
-                    TextSpan(text: "\$29.90", style: TextStyle(
-                        fontWeight: FontWeight.normal,
-                        fontSize: 20.0
-                    )),
-                  ],
-                ),
+            children: [
+              const Image(image: AssetImage('assets/men1.jpg')),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  Text(
+                    "Men's t-shirt",
+                    style: TextStyle(
+                      fontSize: 30.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  Text(
+                    '\$29.90',
+                    style: TextStyle(
+                      fontWeight: FontWeight.normal,
+                      fontSize: 20.0,
+                    ),
+                  ),
+                ],
               ),
               RatingBar.builder(
                 initialRating: 3,
@@ -42,121 +52,86 @@ class _ItemViewState extends State<ItemView> {
                 direction: Axis.horizontal,
                 allowHalfRating: false,
                 itemCount: 5,
-                itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                itemBuilder: (context, _) => Icon(
+                itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                itemBuilder: (context, _) => const Icon(
                   Icons.star,
                   color: Colors.black,
                 ),
                 onRatingUpdate: (rating) {
-                  print(rating);
+                  if (kDebugMode) {
+                    print(rating);
+                  }
                 },
               ),
-              Text("Nike Sportswear",
+              const Text(
+                'Nike Sportswear',
                 style: TextStyle(
-                    fontSize: 18.0,
-                    color: Colors.black,
-                    fontWeight: FontWeight.normal
+                  fontSize: 18.0,
+                  color: Colors.black,
+                  fontWeight: FontWeight.normal,
                 ),
               ),
-              Text(
-                "Made from our soft, midweight cotton in a relaxed fit, this tee keeps it casual and comfy all day. Bold graphics celebrate our diverse global community and the connections we make through sport.",
-                style: const TextStyle(
-                    fontSize: 14.0,
-                    color: Colors.black,
-                    fontWeight: FontWeight.w300
+              const Text(
+                'Made from our soft, midweight cotton in a relaxed fit, this tee keeps it casual and comfy all day. Bold graphics celebrate our diverse global community and the connections we make through sport.',
+                style: TextStyle(
+                  fontSize: 14.0,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w300,
                 ),
               ),
-              Text("Select size",
+              const Text(
+                'Select size',
                 style: TextStyle(
-                    fontSize: 18.0,
-                    color: Colors.black,
-                    fontWeight: FontWeight.normal
+                  fontSize: 18.0,
+                  color: Colors.black,
+                  fontWeight: FontWeight.normal,
                 ),
               ),
               ButtonBar(
-                children: [
-                  ElevatedButton(
-                      child: Text(
-                          "XS",
-                          style: TextStyle(fontSize: 14)
+                children: ['XS', 'S', 'M', 'L', 'XL']
+                    .map(
+                      (size) => _SizeButton(
+                        onPressed: () => onSizeChange(size),
+                        child: Text(size),
                       ),
-                      style: ButtonStyle(
-                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18.0),
-                              )
-                          )
-                      ),
-                      onPressed: () => null
-                  ),
-                  ElevatedButton(
-                      child: Text(
-                          "S",
-                          style: TextStyle(fontSize: 14)
-                      ),
-                      style: ButtonStyle(
-                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                              )
-                          )
-                      ),
-                      onPressed: () => null
-                  ),
-                  ElevatedButton(
-                      child: Text(
-                          "M",
-                          style: TextStyle(fontSize: 14)
-                      ),
-                      style: ButtonStyle(
-                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                              )
-                          )
-                      ),
-                      onPressed: () => null
-                  ),
-                  ElevatedButton(
-                      child: Text(
-                          "L",
-                          style: TextStyle(fontSize: 14)
-                      ),
-                      style: ButtonStyle(
-                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                              )
-                          )
-                      ),
-                      onPressed: () => null
-                  ),
-                  ElevatedButton(
-                      child: Text(
-                          "XL",
-                          style: TextStyle(fontSize: 14)
-                      ),
-                      style: ButtonStyle(
-                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                              )
-                          )
-                      ),
-                      onPressed: () => null
-                  )
-                ],
+                    )
+                    .toList(),
               ),
               ElevatedButton(
                 onPressed: () {},
-                child: Text(
-                    'Try on',
-                    style: TextStyle(fontSize: 14)
-                ),
+                child: const Text('Try on', style: TextStyle(fontSize: 14)),
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _SizeButton extends StatelessWidget {
+  final void Function()? onPressed;
+  final Widget child;
+
+  const _SizeButton({
+    required this.onPressed,
+    required this.child,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      style: ButtonStyle(
+        shape: MaterialStatePropertyAll<OutlinedBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18.0),
+          ),
+        ),
+      ),
+      onPressed: onPressed,
+      child: DefaultTextStyle(
+        style: const TextStyle(fontSize: 14),
+        child: child,
       ),
     );
   }
