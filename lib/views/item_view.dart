@@ -25,9 +25,9 @@ class _ItemViewState extends State<ItemView> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               const Image(image: AssetImage('assets/men1.jpg')),
-              Row(
+              const Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   Text(
                     "Men's t-shirt",
                     style: TextStyle(
