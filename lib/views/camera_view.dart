@@ -1,7 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:google_mlkit_object_detection/google_mlkit_object_detection.dart';
+import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
 
 enum CameraViewStatus {
   initializing,
@@ -180,6 +180,7 @@ class _CameraViewState extends State<CameraView> {
       camera,
       ResolutionPreset.high,
       enableAudio: false,
+      imageFormatGroup: ImageFormatGroup.nv21,
     );
     _controller?.initialize().then((_) {
       if (!mounted) {
@@ -205,44 +206,34 @@ class _CameraViewState extends State<CameraView> {
   }
 
   Future<void> _processImageStream(CameraImage image) async {
-    final WriteBuffer buffer = WriteBuffer();
+    final buffer = WriteBuffer();
     for (final plane in image.planes) {
       buffer.putUint8List(plane.bytes);
     }
     final bytes = buffer.done().buffer.asUint8List();
 
-    final Size imageSize =
-        Size(image.width.toDouble(), image.height.toDouble());
+    final size = Size(image.width.toDouble(), image.height.toDouble());
 
     final camera = _cameras![_cameraIndex];
-    final imageRotation =
+    final rotation =
         InputImageRotationValue.fromRawValue(camera.sensorOrientation);
-    if (imageRotation == null) return;
+    if (rotation == null) return;
 
-    final inputImageFormat =
-        InputImageFormatValue.fromRawValue(image.format.raw);
-    if (inputImageFormat == null) return;
+    final format = InputImageFormatValue.fromRawValue(image.format.raw);
+    // We only support Android, and only NV21 is supported in Android
+    if (format == null || format != InputImageFormat.nv21) return;
 
-    final planeData = image.planes.map(
-      (plane) {
-        return InputImagePlaneMetadata(
-          bytesPerRow: plane.bytesPerRow,
-          height: plane.height,
-          width: plane.width,
-        );
-      },
-    ).toList();
-
-    final inputImageData = InputImageData(
-      size: imageSize,
-      imageRotation: imageRotation,
-      inputImageFormat: inputImageFormat,
-      planeData: planeData,
-    );
+    if (image.planes.length != 1) return;
+    final plane = image.planes.first;
 
     final inputImage = InputImage.fromBytes(
       bytes: bytes,
-      inputImageData: inputImageData,
+      metadata: InputImageMetadata(
+        size: size,
+        rotation: rotation,
+        format: format,
+        bytesPerRow: plane.bytesPerRow,
+      ),
     );
 
     widget.onImage(inputImage);
