@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Clothing {
-  final String imagePath;
-  final String name;
-  final double price;
-
-  Clothing(this.imagePath, this.name, this.price);
-}
+import '../utils/clothing_item.dart';
 
 class ClothingListView extends StatefulWidget {
   const ClothingListView({super.key});
@@ -16,15 +10,15 @@ class ClothingListView extends StatefulWidget {
 }
 
 class _ClothingListViewState extends State<ClothingListView> {
-  final List<Clothing> clothingList = [
-    Clothing('assets/images/image_4.png', 'Men T-Shirt', 29.90),
-    Clothing('assets/images/image_5.png', 'Woman T-Shirt', 29.90),
-    Clothing('assets/images/image_6.png', 'Men T-Shirt', 29.90),
-    Clothing('assets/images/image_7.png', 'Woman T-Shirt', 29.90),
-    Clothing('assets/images/image_4.png', 'Men T-Shirt', 29.90),
-    Clothing('assets/images/image_5.png', 'Woman T-Shirt', 29.90),
-    Clothing('assets/images/image_6.png', 'Men T-Shirt', 29.90),
-    Clothing('assets/images/image_7.png', 'Woman T-Shirt', 29.90),
+  static const List<ClothingItem> clothingItems = [
+    ClothingItem('assets/images/image_4.png', 'Men T-Shirt', 29.90),
+    ClothingItem('assets/images/image_5.png', 'Woman T-Shirt', 29.90),
+    ClothingItem('assets/images/image_6.png', 'Men T-Shirt', 29.90),
+    ClothingItem('assets/images/image_7.png', 'Woman T-Shirt', 29.90),
+    ClothingItem('assets/images/image_4.png', 'Men T-Shirt', 29.90),
+    ClothingItem('assets/images/image_5.png', 'Woman T-Shirt', 29.90),
+    ClothingItem('assets/images/image_6.png', 'Men T-Shirt', 29.90),
+    ClothingItem('assets/images/image_7.png', 'Woman T-Shirt', 29.90),
   ];
 
   @override
@@ -54,16 +48,16 @@ class _ClothingListViewState extends State<ClothingListView> {
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
               ),
-              itemCount: clothingList.length,
+              itemCount: clothingItems.length,
               itemBuilder: (BuildContext context, int index) {
                 return Card(
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(10,20,10,10),
+                    padding: const EdgeInsets.fromLTRB(10, 20, 10, 10),
                     child: Column(
                       children: [
                         Expanded(
                           child: Image.asset(
-                            clothingList[index].imagePath,
+                            clothingItems[index].imagePath,
                             width: 90,
                             height: 120,
                             fit: BoxFit.cover,
@@ -73,12 +67,12 @@ class _ClothingListViewState extends State<ClothingListView> {
                           height: 10,
                         ),
                         Text(
-                          clothingList[index].name,
+                          clothingItems[index].name,
                           style: const TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          '\$${clothingList[index].price.toString()}',
+                          '\$${clothingItems[index].price.toString()}',
                           style: const TextStyle(fontSize: 16),
                         ),
                       ],
