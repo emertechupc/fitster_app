@@ -194,13 +194,15 @@ class _CameraViewState extends State<CameraView> {
   Future<void> _stopLiveFeed() async {
     if (!_status.isLive) return;
 
-    setState(() {
-      _status = CameraViewStatus.stopped;
-    });
-
     await _controller?.stopImageStream();
     await _controller?.dispose();
     _controller = null;
+
+    if (mounted) {
+      setState(() {
+        _status = CameraViewStatus.stopped;
+      });
+    }
   }
 
   Future<void> _processImageStream(CameraImage image) async {
