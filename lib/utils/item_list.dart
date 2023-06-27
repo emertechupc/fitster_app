@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../views/item_view.dart';
+import '../views/clothing_list_view.dart';
 
 class _Item extends StatelessWidget {
   final String child;
@@ -14,7 +14,7 @@ class _Item extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const ItemView(),
+            builder: (context) => const ClothingListView(),
           ),
         );
       },
