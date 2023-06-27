@@ -50,15 +50,15 @@ class SearchScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-            padding: EdgeInsets.all(16.0),
-            child: SearchBar(
-              leading: Icon(
-                Icons.search,
-              ),
-              hintText: 'Search...',
-            ),
-          ),
+          // const Padding(
+          //   padding: EdgeInsets.all(16.0),
+          //   child: SearchBar(
+          //     leading: Icon(
+          //       Icons.search,
+          //     ),
+          //     hintText: 'Search...',
+          //   ),
+          // ),
           ItemList(items: _genders),
           const Padding(
             padding: EdgeInsets.only(left: 16.0),
