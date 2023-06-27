@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../utils/clothing_item.dart';
+import 'item_view.dart';
 
 class ClothingListView extends StatefulWidget {
   const ClothingListView({super.key});
@@ -50,32 +51,42 @@ class _ClothingListViewState extends State<ClothingListView> {
               ),
               itemCount: clothingItems.length,
               itemBuilder: (BuildContext context, int index) {
-                return Card(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 20, 10, 10),
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: Image.asset(
-                            clothingItems[index].imagePath,
-                            width: 90,
-                            height: 120,
-                            fit: BoxFit.cover,
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ItemView(),
+                      ),
+                    );
+                  },
+                  child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(10, 20, 10, 10),
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: Image.asset(
+                              clothingItems[index].imagePath,
+                              width: 90,
+                              height: 120,
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          clothingItems[index].name,
-                          style: const TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          '\$${clothingItems[index].price.toString()}',
-                          style: const TextStyle(fontSize: 16),
-                        ),
-                      ],
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            clothingItems[index].name,
+                            style: const TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            '\$${clothingItems[index].price.toString()}',
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 );
