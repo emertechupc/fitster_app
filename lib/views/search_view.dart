@@ -41,32 +41,30 @@ class SearchView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Fitster',
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: const [
+              // const Padding(
+              //   padding: EdgeInsets.all(16.0),
+              //   child: SearchBar(
+              //     leading: Icon(
+              //       Icons.search,
+              //     ),
+              //     hintText: 'Search...',
+              //   ),
+              // ),
+              ItemList(items: genders),
+              _SectionTitle(child: Text('Brands')),
+              ItemList(items: brands),
+              _SectionTitle(child: Text('Styles')),
+              ItemList(items: styles),
+              _SectionTitle(child: Text('Types')),
+              ItemList(items: types),
+            ],
+          ),
         ),
-      ),
-      body: const Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // const Padding(
-          //   padding: EdgeInsets.all(16.0),
-          //   child: SearchBar(
-          //     leading: Icon(
-          //       Icons.search,
-          //     ),
-          //     hintText: 'Search...',
-          //   ),
-          // ),
-          ItemList(items: genders),
-          _SectionTitle(child: Text('Brands')),
-          ItemList(items: brands),
-          _SectionTitle(child: Text('Styles')),
-          ItemList(items: styles),
-          _SectionTitle(child: Text('Types')),
-          ItemList(items: types),
-        ],
       ),
     );
   }
