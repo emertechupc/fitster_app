@@ -21,7 +21,7 @@ class SettingsView extends StatelessWidget {
                   children: <Widget>[
                     Expanded(
                       child: Text(
-                        'Enable dark mode?',
+                        'Dark Mode',
                       ),
                     ),
                     Switch(
