@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'states/theme_state.dart';
-import 'views/main_bounce_tab_bar.dart';
+import 'views/home_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,7 +27,7 @@ class FitsterApp extends StatelessWidget {
             title: 'Fitster',
             debugShowCheckedModeBanner: false,
             theme: state.currentTheme,
-            home: MainPage(),
+            home: HomePage(),
           );
         },
       ),

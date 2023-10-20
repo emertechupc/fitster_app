@@ -15,6 +15,12 @@ class ThemeState with ChangeNotifier {
             style: ElevatedButton.styleFrom(
               backgroundColor: Color.fromRGBO(0, 129, 112, 1),
             ),
+          ),          
+          filledButtonTheme: FilledButtonThemeData(
+            style: ButtonStyle(
+              backgroundColor:
+                    MaterialStatePropertyAll<Color>(Color.fromRGBO(0, 129, 112, 1)),
+                fixedSize: MaterialStatePropertyAll<Size>(Size(128, 48))),
           ),
         )
       : ThemeData.light().copyWith(
@@ -34,7 +40,13 @@ class ThemeState with ChangeNotifier {
           ),
           colorScheme: ColorScheme.light().copyWith(
             background: Color(0xFF4B64F2),
-          )
+          ),
+          filledButtonTheme: FilledButtonThemeData(
+            style: ButtonStyle(
+                backgroundColor:
+                    MaterialStatePropertyAll<Color>(Color(0xFF4B64F2)),
+                fixedSize: MaterialStatePropertyAll<Size>(Size(128, 48))),
+          ),
         );
 
   bool get isDarkModeEnabled => _isDarkModeEnabled;

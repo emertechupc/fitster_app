@@ -138,8 +138,8 @@ class _BounceTapBarState extends State<BounceTapBar>
 
   @override
   void dispose() {
-    super.dispose();
     _controller.dispose();
+    super.dispose();
   }
 
   @override
