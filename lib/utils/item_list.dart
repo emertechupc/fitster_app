@@ -55,6 +55,8 @@ class _ItemListState extends State<ItemList> {
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView.builder(
+        physics: ClampingScrollPhysics(),
+        shrinkWrap: true,
         itemCount: widget.items.length,
         itemBuilder: (context, index) {
           return _Item(child: widget.items[index]);
