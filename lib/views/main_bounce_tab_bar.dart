@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../utils/end_drawer.dart';
 import 'home_page.dart';
 import 'search_view.dart';
-import 'settings_view.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -29,30 +29,29 @@ class _MainPageState extends State<MainPage> {
         title: Text('Fitster'),
         automaticallyImplyLeading: false,
         actions: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(
-              right: 20.0,
-            ),
-            child: GestureDetector(
-              onTap: () {},
-              child: Icon(
-                Icons.account_circle_rounded,
-                size: 25.0,
+          Builder(builder: (context) {
+            return Padding(
+              padding: const EdgeInsets.only(right: 10.0),
+              child: IconButton(
+                onPressed: () {
+                  Scaffold.of(context).openEndDrawer();
+                },
+                icon: Icon(Icons.account_circle_rounded),
               ),
-            ),
-          )
+            );
+          })
         ],
       ),
+      endDrawer: NavDrawer(),
       extendBody: true,
       body: IndexedStack(
         index: _currentIndex,
         children: [
           //Aqui se pondrian los screens
+          Container(),
           SearchView(),
           Container(),
           Container(),
-          Container(),
-          SettingsView()
         ],
       ),
       bottomNavigationBar: BounceTapBar(
@@ -67,20 +66,17 @@ class _MainPageState extends State<MainPage> {
             Icons.home_outlined,
             color: Colors.white,
           ),
+          
+          Icon(
+            Icons.search_outlined,
+            color: Colors.white,
+          ),
           Icon(
             Icons.favorite_border_outlined,
             color: Colors.white,
           ),
           Icon(
             Icons.shopping_cart_outlined,
-            color: Colors.white,
-          ),
-          Icon(
-            Icons.search_outlined,
-            color: Colors.white,
-          ),
-          Icon(
-            Icons.settings_outlined,
             color: Colors.white,
           ),
         ],
