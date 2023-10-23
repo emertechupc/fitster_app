@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
 
-import '../painters/pose_painter.dart';
+import '../../painters/pose_painter.dart';
 import 'camera_view.dart';
 
 class PoseDetectorView extends StatefulWidget {

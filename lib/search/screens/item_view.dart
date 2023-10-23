@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-import 'pose_detector_view.dart';
+import '../../fitting_room/screens/pose_detector_view.dart';
 
 class ItemView extends StatefulWidget {
   const ItemView({super.key});
