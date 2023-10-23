@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
+import 'states/theme_state.dart';
 import 'views/home_page.dart';
 
 void main() {
@@ -14,20 +15,22 @@ class FitsterApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Fitster',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        appBarTheme: const AppBarTheme(
-          systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarColor: Colors.blue,
-            statusBarIconBrightness: Brightness.light,
-            statusBarBrightness: Brightness.dark,
-          ),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => ThemeState(),
         ),
+      ],
+      child: Consumer<ThemeState>(
+        builder: (context, state, child) {
+          return MaterialApp(
+            title: 'Fitster',
+            debugShowCheckedModeBanner: false,
+            theme: state.currentTheme,
+            home: HomePage(),
+          );
+        },
       ),
-      home: const HomePage(),
     );
   }
 }

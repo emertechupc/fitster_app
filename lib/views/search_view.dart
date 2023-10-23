@@ -41,32 +41,29 @@ class SearchView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Fitster',
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: const [
+              Padding(
+                padding: EdgeInsets.all(16.0),
+                child: SearchBar(
+                  leading: Icon(
+                    Icons.search,
+                  ),
+                  hintText: 'Search...',
+                ),
+              ),
+              ItemList(items: genders),
+              _SectionTitle(child: Text('Brands')),
+              ItemList(items: brands),
+              _SectionTitle(child: Text('Styles')),
+              ItemList(items: styles),
+              _SectionTitle(child: Text('Types')),
+              ItemList(items: types),
+            ],
+          ),
         ),
-      ),
-      body: const Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // const Padding(
-          //   padding: EdgeInsets.all(16.0),
-          //   child: SearchBar(
-          //     leading: Icon(
-          //       Icons.search,
-          //     ),
-          //     hintText: 'Search...',
-          //   ),
-          // ),
-          ItemList(items: genders),
-          _SectionTitle(child: Text('Brands')),
-          ItemList(items: brands),
-          _SectionTitle(child: Text('Styles')),
-          ItemList(items: styles),
-          _SectionTitle(child: Text('Types')),
-          ItemList(items: types),
-        ],
       ),
     );
   }
@@ -81,13 +78,16 @@ class _SectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 16.0),
-      child: DefaultTextStyle(
-        style: const TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
-          color: Color(0xFF4B64F2),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: DefaultTextStyle(
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: Color(0xFF4B64F2),
+          ),
+          child: child,
         ),
-        child: child,
       ),
     );
   }
