@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../views/clothing_list_view.dart';
+import '../search/screens/clothing_list_view.dart';
 
 class _Item extends StatelessWidget {
   final String child;
