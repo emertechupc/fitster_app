@@ -21,13 +21,27 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-
     final theme = Theme.of(context);
 
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text('Fitster'),
+        automaticallyImplyLeading: false,
+        actions: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(
+              right: 20.0,
+            ),
+            child: GestureDetector(
+              onTap: () {},
+              child: Icon(
+                Icons.account_circle_rounded,
+                size: 25.0,
+              ),
+            ),
+          )
+        ],
       ),
       extendBody: true,
       body: IndexedStack(
