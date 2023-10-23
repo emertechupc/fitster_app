@@ -53,15 +53,16 @@ class ItemList extends StatefulWidget {
 class _ItemListState extends State<ItemList> {
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return SizedBox(
+      height: MediaQuery.of(context).size.width / 2,
       child: ListView.builder(
-        physics: ClampingScrollPhysics(),
+        physics: BouncingScrollPhysics(),
+        scrollDirection: Axis.horizontal,      
         shrinkWrap: true,
         itemCount: widget.items.length,
         itemBuilder: (context, index) {
           return _Item(child: widget.items[index]);
         },
-        scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.all(8),
       ),
     );

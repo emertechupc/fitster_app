@@ -42,19 +42,18 @@ class SearchView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Center(
+        child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: const [
-              // const Padding(
-              //   padding: EdgeInsets.all(16.0),
-              //   child: SearchBar(
-              //     leading: Icon(
-              //       Icons.search,
-              //     ),
-              //     hintText: 'Search...',
-              //   ),
-              // ),
+              Padding(
+                padding: EdgeInsets.all(16.0),
+                child: SearchBar(
+                  leading: Icon(
+                    Icons.search,
+                  ),
+                  hintText: 'Search...',
+                ),
+              ),
               ItemList(items: genders),
               _SectionTitle(child: Text('Brands')),
               ItemList(items: brands),
@@ -79,13 +78,16 @@ class _SectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 16.0),
-      child: DefaultTextStyle(
-        style: const TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
-          color: Color(0xFF4B64F2),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: DefaultTextStyle(
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: Color(0xFF4B64F2),
+          ),
+          child: child,
         ),
-        child: child,
       ),
     );
   }
