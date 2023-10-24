@@ -52,6 +52,7 @@ class NavDrawer extends StatelessWidget {
               leading: Icon(Icons.person_outline_outlined),
               title: Text(
                 'User Profile',
+                style: theme.textTheme.bodyMedium,
               ),
               onTap: () {},
             ),
@@ -59,6 +60,7 @@ class NavDrawer extends StatelessWidget {
               leading: Icon(Icons.library_books),
               title: Text(
                 'Order History',
+                style: theme.textTheme.bodyMedium,
               ),
               onTap: () {},
             ),
@@ -66,6 +68,7 @@ class NavDrawer extends StatelessWidget {
               leading: Icon(Icons.dark_mode),
               title: Text(
                 'Dark Mode',
+                style: theme.textTheme.bodyMedium,
               ),
               trailing: Consumer<ThemeState>(
                 builder: (context, state, child) {
@@ -82,6 +85,7 @@ class NavDrawer extends StatelessWidget {
               leading: Icon(Icons.logout),
               title: Text(
                 'Log Out',
+                style: theme.textTheme.bodyMedium,
               ),
               onTap: () {},
             ),
