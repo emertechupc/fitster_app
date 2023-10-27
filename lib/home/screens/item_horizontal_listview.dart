@@ -56,10 +56,10 @@ class _Slide extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
+    final colors = Theme.of(context);
     return Container(
       width: 180,
-      color: colors.background,
+      color: colors.cardColor,
       margin: const EdgeInsets.symmetric(horizontal: 5.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,7 +100,6 @@ class _Slide extends StatelessWidget {
               item.title,
               maxLines: 2,
               style: TextStyle(
-                color: Colors.white,
                 fontSize: 11,
               ),
             ),
@@ -110,7 +109,6 @@ class _Slide extends StatelessWidget {
             child: Text(
               'S/.${item.price}',
               style: TextStyle(
-                color: Colors.white,
               ),
             ),
           ),
@@ -129,7 +127,6 @@ class _Slide extends StatelessWidget {
               Text(
                 '(${item.rating.rate})',
                 style: TextStyle(
-                  color: Colors.white,
                   fontSize: 12,
                 ),
               )

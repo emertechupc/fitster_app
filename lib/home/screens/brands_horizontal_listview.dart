@@ -45,11 +45,11 @@ class _Slide extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
+    final colors = Theme.of(context);
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: colors.background
+        color: colors.cardColor,
       ),
       width: 120,
       margin: const EdgeInsets.symmetric(horizontal: 5.0),
