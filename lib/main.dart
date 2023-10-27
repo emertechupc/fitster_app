@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'auth/screens/signup_view.dart';
+import 'home/screens/main_bounce_tab_bar.dart';
 import 'states/theme_state.dart';
 import 'auth/screens/home_page.dart';
 
@@ -24,10 +26,16 @@ class FitsterApp extends StatelessWidget {
       child: Consumer<ThemeState>(
         builder: (context, state, child) {
           return MaterialApp(
+            initialRoute: 'signin',
+            routes: {
+              'signin': (_) => HomePage(),
+              'signup': (_) => SignUpView(),
+              'home': (_) => MainPage(),
+            },
+
             title: 'Fitster',
             debugShowCheckedModeBanner: false,
             theme: state.currentTheme,
-            home: HomePage(),
           );
         },
       ),
