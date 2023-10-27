@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../utils/end_drawer.dart';
 import '../../auth/screens/home_page.dart';
 import '../../search/screens/search_view.dart';
+import 'welcome_view.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -48,7 +49,7 @@ class _MainPageState extends State<MainPage> {
         index: _currentIndex,
         children: [
           //Aqui se pondrian los screens
-          Container(),
+          WelcomeView(),
           SearchView(),
           Container(),
           Container(),

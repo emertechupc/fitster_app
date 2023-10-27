@@ -3,12 +3,13 @@ import 'package:provider/provider.dart';
 
 import 'auth/screens/signup_view.dart';
 import 'home/screens/main_bounce_tab_bar.dart';
+import 'home/service/item_service.dart';
 import 'states/theme_state.dart';
 import 'auth/screens/home_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const FitsterApp());
+  runApp(FitsterApp());
 }
 
 class FitsterApp extends StatelessWidget {
@@ -19,6 +20,7 @@ class FitsterApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => ItemService()),
         ChangeNotifierProvider(
           create: (_) => ThemeState(),
         ),
