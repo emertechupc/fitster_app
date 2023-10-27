@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../utils/item_list.dart';
+import '../../utils/item_list.dart';
 
 class SearchView extends StatelessWidget {
   const SearchView({super.key});
@@ -43,6 +43,7 @@ class SearchView extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
           child: Column(
             children: const [
               Padding(

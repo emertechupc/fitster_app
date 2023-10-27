@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../utils/end_drawer.dart';
-import 'home_page.dart';
-import 'search_view.dart';
+import '../../utils/end_drawer.dart';
+import '../../auth/screens/home_page.dart';
+import '../../search/screens/search_view.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});

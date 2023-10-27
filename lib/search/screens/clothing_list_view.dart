@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../utils/clothing_item.dart';
+import '../../utils/clothing_item.dart';
 import 'item_view.dart';
 
 class ClothingListView extends StatefulWidget {

@@ -15,12 +15,24 @@ class ThemeState with ChangeNotifier {
             style: ElevatedButton.styleFrom(
               backgroundColor: Color.fromRGBO(0, 129, 112, 1),
             ),
-          ),          
+          ),
           filledButtonTheme: FilledButtonThemeData(
             style: ButtonStyle(
-              backgroundColor:
-                    MaterialStatePropertyAll<Color>(Color.fromRGBO(0, 129, 112, 1)),
+                backgroundColor: MaterialStatePropertyAll<Color>(
+                    Color.fromRGBO(0, 129, 112, 1)),
                 fixedSize: MaterialStatePropertyAll<Size>(Size(128, 48))),
+          ),
+          buttonTheme: ButtonThemeData(
+            buttonColor: Color.fromRGBO(0, 129, 112, 1),
+          ),
+          inputDecorationTheme: InputDecorationTheme(
+            errorStyle: TextStyle(color: Colors.redAccent),
+            labelStyle: TextStyle(color: Colors.grey),
+            hintStyle: TextStyle(color: Colors.grey),
+          ),
+          textTheme: TextTheme(
+            headlineSmall: TextStyle(color: Colors.black),
+            bodyMedium: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w500),
           ),
         )
       : ThemeData.light().copyWith(
@@ -43,9 +55,20 @@ class ThemeState with ChangeNotifier {
           ),
           filledButtonTheme: FilledButtonThemeData(
             style: ButtonStyle(
-                backgroundColor:
-                    MaterialStatePropertyAll<Color>(Color(0xFF4B64F2)),
-                fixedSize: MaterialStatePropertyAll<Size>(Size(128, 48))),
+              backgroundColor: MaterialStatePropertyAll<Color>(
+                Color(0xFF4B64F2),
+              ),
+              fixedSize: MaterialStatePropertyAll<Size>(
+                Size(128, 48),
+              ),
+            ),
+          ),
+          buttonTheme: ButtonThemeData(
+            buttonColor: Color(0xFF4B64F2),
+          ),
+          textTheme: TextTheme(
+            headlineSmall: TextStyle(color: Colors.black),
+            bodyMedium: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w500),
           ),
         );
 
