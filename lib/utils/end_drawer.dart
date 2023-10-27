@@ -87,7 +87,9 @@ class NavDrawer extends StatelessWidget {
                 'Log Out',
                 style: theme.textTheme.bodyMedium,
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.pushReplacementNamed(context, 'signin');
+              },
             ),
           ],
         ),
