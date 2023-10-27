@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../home/screens/main_bounce_tab_bar.dart';
 import '../../utils/card_container.dart';
 import '../../utils/input_decoration.dart';
 import '../provider/login_form_provider.dart';
@@ -42,11 +41,13 @@ class HomePage extends StatelessWidget {
                 ),
                 SizedBox(height: 20),
                 TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(context, 'signup');
+                    },
                     style: ButtonStyle(
-                    overlayColor: MaterialStateProperty.all(
-                        Colors.indigo.withOpacity(0.1)),
-                    shape: MaterialStateProperty.all(StadiumBorder())),
+                        overlayColor: MaterialStateProperty.all(
+                            Colors.indigo.withOpacity(0.1)),
+                        shape: MaterialStateProperty.all(StadiumBorder())),
                     child: Text(
                       'Don\'t have an account? Sign up',
                       style: theme.textTheme.bodyMedium,
@@ -76,7 +77,7 @@ class _LoginForm extends StatelessWidget {
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecorations.authInputDecoration(
                 hintText: 'john.doe@gmail.com',
-                labelText: 'Correo electrónico',
+                labelText: 'Email',
                 prefixIcon: Icons.alternate_email_rounded),
             onChanged: (value) => loginForm.email = value,
             validator: (value) {
@@ -86,7 +87,7 @@ class _LoginForm extends StatelessWidget {
 
               return regExp.hasMatch(value ?? '')
                   ? null
-                  : 'El valor ingresado no luce como un correo';
+                  : 'The value does not look like an email';
             },
           ),
           SizedBox(height: 30),
@@ -97,13 +98,13 @@ class _LoginForm extends StatelessWidget {
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecorations.authInputDecoration(
                 hintText: '*****',
-                labelText: 'Contraseña',
+                labelText: 'Password',
                 prefixIcon: Icons.lock_outline),
             onChanged: (value) => loginForm.password = value,
             validator: (value) {
               return (value != null && value.length >= 6)
                   ? null
-                  : 'La contraseña debe de ser de 6 caracteres';
+                  : 'Password must be 6 characters long';
             },
           ),
           SizedBox(height: 30),
@@ -128,12 +129,7 @@ class _LoginForm extends StatelessWidget {
                         NotificationsService.showSnackbar(errorMessage);
                         loginForm.isLoading = false;
                       }*/
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MainPage(),
-                        ),
-                      );
+                      Navigator.pushReplacementNamed(context, 'home');
                     },
               child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 60, vertical: 15),
