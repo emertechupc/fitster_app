@@ -11,6 +11,7 @@ class ThemeState with ChangeNotifier {
               statusBarColor: Colors.black,
             ),
           ),
+          dividerColor: Colors.white,
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ElevatedButton.styleFrom(
               backgroundColor: Color.fromRGBO(0, 129, 112, 1),
@@ -42,6 +43,7 @@ class ThemeState with ChangeNotifier {
               statusBarColor: Color(0xFF4B64F2),
             ),
           ),
+          dividerColor: Colors.black,
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ElevatedButton.styleFrom(
               backgroundColor: Color(0xFF4B64F2),
