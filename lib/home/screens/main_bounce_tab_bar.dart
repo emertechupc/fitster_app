@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../shopping/screens/shopping_cart_view.dart';
 import '../../utils/end_drawer.dart';
 import '../../auth/screens/home_page.dart';
 import '../../search/screens/search_view.dart';
@@ -52,7 +53,7 @@ class _MainPageState extends State<MainPage> {
           WelcomeView(),
           SearchView(),
           Container(),
-          Container(),
+          ShoppingCartView(),
         ],
       ),
       bottomNavigationBar: BounceTapBar(
