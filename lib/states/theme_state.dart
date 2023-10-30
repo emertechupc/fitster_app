@@ -54,6 +54,7 @@ class ThemeState with ChangeNotifier {
           ),
           colorScheme: ColorScheme.light().copyWith(
             background: Color(0xFF4B64F2),
+            primary: Color(0xFF4B64F2)
           ),
           filledButtonTheme: FilledButtonThemeData(
             style: ButtonStyle(
@@ -64,6 +65,10 @@ class ThemeState with ChangeNotifier {
                 Size(128, 48),
               ),
             ),
+          ),
+          inputDecorationTheme: InputDecorationTheme(
+            hintStyle: TextStyle(color: Colors.grey),
+            labelStyle: TextStyle(color: Colors.grey.shade600),
           ),
           buttonTheme: ButtonThemeData(
             buttonColor: Color(0xFF4B64F2),
