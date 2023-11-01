@@ -12,6 +12,7 @@ class NavDrawer extends StatelessWidget {
 
     return ClipRRect(
       child: Drawer(
+        width: MediaQuery.of(context).size.width / 1.5,
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
@@ -54,7 +55,9 @@ class NavDrawer extends StatelessWidget {
                 'User Profile',
                 style: theme.textTheme.bodyMedium,
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.pushReplacementNamed(context, 'profile');
+              },
             ),
             ListTile(
               leading: Icon(Icons.library_books),
@@ -82,7 +85,7 @@ class NavDrawer extends StatelessWidget {
               ),
             ),
             ListTile(
-              leading: Icon(Icons.logout),
+              leading: Icon(Icons.power_settings_new),
               title: Text(
                 'Log Out',
                 style: theme.textTheme.bodyMedium,
