@@ -4,8 +4,8 @@ import '../../utils/card_container.dart';
 import '../../utils/input_decoration.dart';
 import '../provider/login_form_provider.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class SignInView extends StatelessWidget {
+  const SignInView({super.key});
 
   @override
   Widget build(BuildContext context) {
