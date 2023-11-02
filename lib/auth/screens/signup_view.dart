@@ -3,7 +3,9 @@ import 'package:provider/provider.dart';
 
 import '../../utils/card_container.dart';
 import '../../utils/input_decoration.dart';
+import '../model/user.dart';
 import '../provider/signup_form_provider.dart';
+import '../services/auth_service.dart';
 
 class SignUpView extends StatelessWidget {
   const SignUpView({super.key});
@@ -160,29 +162,34 @@ class _SignUpForm extends StatelessWidget {
                   ? null
                   : () async {
                       FocusScope.of(context).unfocus();
-                      //final authService = Provider.of<AuthService>(context, listen: false);
+                      final authService =
+                          Provider.of<AuthService>(context, listen: false);
 
                       if (!loginForm.isValidForm()) return;
 
-                      //loginForm.isLoading = true;
+                      loginForm.isLoading = true;
 
-                      //final String? errorMessage = await authService.login(loginForm.email, loginForm.password);
-
-                      /*if (errorMessage == null) {
-                        // ignore: use_build_context_synchronously
-                        Navigator.pushReplacementNamed(context, 'home');
-                      } else {
-                        // print( errorMessage );
-                        NotificationsService.showSnackbar(errorMessage);
-                        loginForm.isLoading = false;
-                      }*/
+                      await authService.register(
+                        User(
+                          firstName: loginForm.name,
+                          lastName: loginForm.lastname,
+                          email: loginForm.email,
+                          password: loginForm.password,
+                        ),
+                      );
+                      final snackBar = SnackBar(content: Text('Successful'));
+                      // ignore: use_build_context_synchronously
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      // ignore: use_build_context_synchronously
                       Navigator.pushReplacementNamed(context, 'signin');
+                      
+                      loginForm.isLoading = false;
                     },
               child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 60, vertical: 15),
                   child: Text(
-                    //loginForm.isLoading ? 'Esperando...' : 'Continuar',
-                    'Sign up',
+                    loginForm.isLoading ? 'Waiting...' : 'Sign up',
+                    //'Sign up',
                     style: TextStyle(color: Colors.white),
                   )))
         ],

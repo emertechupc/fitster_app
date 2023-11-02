@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../shopping/screens/shopping_cart_view.dart';
 import '../../utils/end_drawer.dart';
-import '../../auth/screens/home_page.dart';
 import '../../search/screens/search_view.dart';
 import 'welcome_view.dart';
 
@@ -17,10 +16,6 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int _currentIndex = 0;
 
-  final screens = [
-    HomePage(),
-  ];
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -29,7 +24,6 @@ class _MainPageState extends State<MainPage> {
       appBar: AppBar(
         centerTitle: true,
         title: Text('Fitster'),
-        automaticallyImplyLeading: false,
         actions: <Widget>[
           Builder(builder: (context) {
             return Padding(
@@ -44,6 +38,7 @@ class _MainPageState extends State<MainPage> {
           })
         ],
       ),
+      drawerScrimColor: Colors.black54,
       endDrawer: NavDrawer(),
       extendBody: true,
       body: IndexedStack(
@@ -68,7 +63,6 @@ class _MainPageState extends State<MainPage> {
             Icons.home_outlined,
             color: Colors.white,
           ),
-          
           Icon(
             Icons.search_outlined,
             color: Colors.white,
