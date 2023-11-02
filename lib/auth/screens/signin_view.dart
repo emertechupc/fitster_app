@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../../utils/card_container.dart';
 import '../../utils/input_decoration.dart';
 import '../provider/login_form_provider.dart';
+import '../services/auth_service.dart';
 
 class SignInView extends StatelessWidget {
   const SignInView({super.key});
@@ -113,23 +114,26 @@ class _LoginForm extends StatelessWidget {
                   ? null
                   : () async {
                       FocusScope.of(context).unfocus();
-                      //final authService = Provider.of<AuthService>(context, listen: false);
+                      final authService =
+                          Provider.of<AuthService>(context, listen: false);
 
                       if (!loginForm.isValidForm()) return;
 
-                      //loginForm.isLoading = true;
+                      loginForm.isLoading = true;
 
-                      //final String? errorMessage = await authService.login(loginForm.email, loginForm.password);
+                      final String? errorMessage = await authService.login(
+                          loginForm.email, loginForm.password);
 
-                      /*if (errorMessage == null) {
+                      if (errorMessage == null) {
                         // ignore: use_build_context_synchronously
                         Navigator.pushReplacementNamed(context, 'home');
                       } else {
                         // print( errorMessage );
-                        NotificationsService.showSnackbar(errorMessage);
+                        final snackBar = SnackBar(content: Text(errorMessage));
+                        // ignore: use_build_context_synchronously
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         loginForm.isLoading = false;
-                      }*/
-                      Navigator.pushReplacementNamed(context, 'home');
+                      }
                     },
               child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 60, vertical: 15),
