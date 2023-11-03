@@ -1,128 +1,234 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-
+import 'package:provider/provider.dart';
+import '../../database/database.dart';
+import '../../database/favorite_model.dart';
 import '../../fitting_room/screens/pose_detector_view.dart';
+import '../model/product.dart';
+import '../../globals.dart' as globals;
 
 class ItemView extends StatefulWidget {
-  const ItemView({super.key});
+  final Product product;
+  const ItemView({super.key, required this.product});
 
   @override
   State<ItemView> createState() => _ItemViewState();
 }
 
 class _ItemViewState extends State<ItemView> {
+  late AppDatabase database;
+  bool isFavorite = false;
+  bool isInTheCart = false;
+
   void onSizeChange(String size) {}
+
+  void _favorite() {
+    if (isFavorite) {
+      database.deleteItem(widget.product.id!);
+    } else {
+      database.insertItem(FavoriteModel(
+          rating: widget.product.rating,
+          price: widget.product.price,
+          name: widget.product.name,
+          image: widget.product.image,
+          productId: widget.product.id!,
+          userId: globals.id));
+    }
+
+    setState(() {
+      isFavorite = !isFavorite;
+    });
+  }
+
+  void _isInTheCart() {
+    setState(() {
+      isInTheCart = !isInTheCart;
+    });
+  }
+
+  @override
+  void initState() {
+    database = context.read<AppDatabase>();
+    database.existsProduct(widget.product.id!, globals.id).then((value) {
+      setState(() {
+        isFavorite = value;
+      });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Fitster'),
+        centerTitle: true,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.arrow_back,
+          ),
+        ),
+        actions: [
+          IconButton(
+            onPressed: _favorite,
+            icon: isFavorite
+                ? Icon(
+                    Icons.favorite,
+                    color: Colors.red,
+                    shadows: const [Shadow(blurRadius: 2)],
+                  )
+                : Icon(
+                    Icons.favorite_border,
+                  ),
+          ),
+          IconButton(
+            onPressed: () {
+              _isInTheCart();
+            },
+            icon: isInTheCart
+                ? Icon(
+                    Icons.shopping_cart,
+                    shadows: const [Shadow(blurRadius: 2)],
+                  )
+                : Icon(
+                    Icons.shopping_cart_outlined,
+                  ),
+          ),
+        ],
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const Image(image: AssetImage('assets/men1.jpg')),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Text(
-                        "Men's t-shirt",
-                        style: TextStyle(
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.bold,
-                        ),
+      body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width / 1.5,
+                  height: MediaQuery.of(context).size.height / 3,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(
+                        widget.product.image,
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 10.0),
-                        child: Text(
-                          '\$29.90',
-                          style: TextStyle(
-                            fontWeight: FontWeight.normal,
-                            fontSize: 20.0,
+                    ),
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: Text(
+                              widget.product.name,
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  RatingBar.builder(
-                    initialRating: 3,
-                    minRating: 1,
-                    direction: Axis.horizontal,
-                    allowHalfRating: false,
-                    itemCount: 5,
-                    itemSize: 20.0,
-                    itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
-                    itemBuilder: (context, _) => const Icon(
-                      Icons.star,
-                      color: Colors.yellow,
+                        Padding(
+                          padding: EdgeInsets.only(top: 10.0),
+                          child: Text(
+                            'S/. ${widget.product.price}',
+                            style: TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 20.0,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    onRatingUpdate: (rating) {
-                      if (kDebugMode) {
-                        print(rating);
-                      }
-                    },
-                  ),
-                ],
-              ),
-              SizedBox(height: 10,),
-              const Text(
-                'Nike Sportswear',
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.normal,
-                ),
-              ),
-              SizedBox(height: 10,),
-              const Text(
-                'Made from our soft, midweight cotton in a relaxed fit, this tee keeps it casual and comfy all day. Bold graphics celebrate our diverse global community and the connections we make through sport.',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 14.0,
-                  fontWeight: FontWeight.w300,
-                ),
-              ),
-              SizedBox(height: 10,),
-              const Text(
-                'Select size',
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.normal,
-                ),
-              ),
-              SizedBox(height: 10,),
-              OverflowBar(
-                alignment: MainAxisAlignment.center,
-                children: ['XS', 'S', 'M', 'L', 'XL']
-                    .map(
-                      (size) => _SizeButton(
-                        onPressed: () => onSizeChange(size),
-                        child: Text(size),
-                      ),
-                    )
-                    .toList(),
-              ),
-              SizedBox(height: 10,),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const PoseDetectorView(),
+                    Row(
+                      children: [
+                        RatingBarIndicator(
+                          rating: widget.product.rating,
+                          itemBuilder: (context, _) => Icon(
+                            Icons.star,
+                            color: Colors.yellow,
+                          ),
+                          itemCount: 5,
+                          itemSize: MediaQuery.sizeOf(context).height / 40,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10.0),
+                          child: Text('(${widget.product.rating})'),
+                        ),
+                      ],
                     ),
-                  );
-                },
-                child: const Text('Try on', style: TextStyle(fontSize: 14)),
-              ),
-            ],
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                const Text(
+                  'Nike Sportswear',
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  widget.product.description!,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                const Text(
+                  'Select size',
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                OverflowBar(
+                  alignment: MainAxisAlignment.center,
+                  children: ['XS', 'S', 'M', 'L', 'XL']
+                      .map(
+                        (size) => _SizeButton(
+                          onPressed: () => onSizeChange(size),
+                          child: Text(size),
+                        ),
+                      )
+                      .toList(),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const PoseDetectorView(),
+                      ),
+                    );
+                  },
+                  child: const Text('Try on', style: TextStyle(fontSize: 14)),
+                ),
+              ],
+            ),
           ),
         ),
       ),

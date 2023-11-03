@@ -60,7 +60,7 @@ class WelcomeView extends StatelessWidget {
                 },
               ),
               BrandsHorizontalListview(brands: brands, title: 'Associated brands',),
-              SizedBox(height: 20,)
+              SizedBox(height: 20,),
             ],
           ),
         ),

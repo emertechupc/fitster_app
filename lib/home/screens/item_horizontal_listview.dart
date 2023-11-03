@@ -3,6 +3,8 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../model/item.dart';
 import 'package:animate_do/animate_do.dart';
 
+import 'detail_item.dart';
+
 class ItemHorizontalListview extends StatelessWidget {
   final List<Item> items;
   final String? title;
@@ -56,83 +58,104 @@ class _Slide extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context);
-    return Container(
-      width: 180,
-      color: colors.cardColor,
-      margin: const EdgeInsets.symmetric(horizontal: 5.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Center(
-            child: SizedBox(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20.0),
-                child: Image.network(
-                  item.image,
-                  fit: BoxFit.fill,
-                  height: 170,
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress != null) {
-                      return const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Center(
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(5.0),
+        ),
+      ),
+      child: InkWell(
+        borderRadius: BorderRadius.all(
+          Radius.circular(5.0),
+        ),
+        splashColor: Colors.grey,
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => DetailItemView(
+                        item: item,
+                      )));
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Center(
+              child: SizedBox(
+                width: 120,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20.0),
+                  child: Image.network(
+                    item.image,
+                    fit: BoxFit.fill,
+                    height: 170,
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress != null) {
+                        return const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                            ),
                           ),
-                        ),
-                      );
-                    }
+                        );
+                      }
 
-                    return FadeIn(
-                      child: child,
-                    );
-                  },
+                      return FadeIn(
+                        child: child,
+                      );
+                    },
+                  ),
                 ),
               ),
             ),
-          ),
-          Container(
-            padding: const EdgeInsets.only(left: 5.0),
-            width: 150,
-            child: Text(
-              item.title,
-              maxLines: 2,
-              style: TextStyle(
-                fontSize: 11,
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 5.0),
-            child: Text(
-              'S/.${item.price}',
-              style: TextStyle(
-              ),
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              RatingBarIndicator(
-                rating: item.rating.rate,
-                itemBuilder: (context, _) => Icon(
-                  Icons.star,
-                  color: Colors.yellow.shade800,
-                ),
-                itemCount: 5,
-                itemSize: MediaQuery.sizeOf(context).height / 40,
-              ),
-              Text(
-                '(${item.rating.rate})',
+            Container(
+              padding: const EdgeInsets.only(left: 5.0),
+              width: 150,
+              child: Text(
+                item.title,
+                maxLines: 2,
                 style: TextStyle(
-                  fontSize: 12,
+                  fontSize: 11,
                 ),
-              )
-            ],
-          ),
-        ],
+              ),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 0.0),
+                  child: Text(
+                    'S/.${item.price}',
+                    style: TextStyle(),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    RatingBarIndicator(
+                      rating: item.rating.rate,
+                      itemBuilder: (context, _) => Icon(
+                        Icons.star,
+                        color: Colors.yellow.shade800,
+                      ),
+                      itemCount: 5,
+                      itemSize: MediaQuery.sizeOf(context).height / 40,
+                    ),
+                    Text(
+                      '(${item.rating.rate})',
+                      style: TextStyle(
+                        fontSize: 12,
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

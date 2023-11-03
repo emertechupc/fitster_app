@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../shopping/screens/shopping_cart_view.dart';
 import '../../utils/end_drawer.dart';
 import '../../search/screens/search_view.dart';
@@ -24,6 +23,7 @@ class _MainPageState extends State<MainPage> {
       appBar: AppBar(
         centerTitle: true,
         title: Text('Fitster'),
+        automaticallyImplyLeading: false,
         actions: <Widget>[
           Builder(builder: (context) {
             return Padding(
@@ -43,11 +43,10 @@ class _MainPageState extends State<MainPage> {
       extendBody: true,
       body: IndexedStack(
         index: _currentIndex,
-        children: [
+        children: const [
           //Aqui se pondrian los screens
           WelcomeView(),
           SearchView(),
-          Container(),
           ShoppingCartView(),
         ],
       ),
@@ -65,10 +64,6 @@ class _MainPageState extends State<MainPage> {
           ),
           Icon(
             Icons.search_outlined,
-            color: Colors.white,
-          ),
-          Icon(
-            Icons.favorite_border_outlined,
             color: Colors.white,
           ),
           Icon(
