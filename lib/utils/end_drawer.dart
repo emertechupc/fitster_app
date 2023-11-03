@@ -78,12 +78,14 @@ class NavDrawer extends StatelessWidget {
                       },
                     ),
                     ListTile(
-                      leading: Icon(Icons.library_books),
+                      leading: Icon(Icons.favorite),
                       title: Text(
-                        'Order History',
+                        'Wish List',
                         style: theme.textTheme.bodyMedium,
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushReplacementNamed(context, 'wishlist');
+                      },
                     ),
                     ListTile(
                       leading: Icon(Icons.dark_mode),
