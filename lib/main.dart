@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'auth/screens/signup_view.dart';
 import 'auth/services/auth_service.dart';
+import 'database/database.dart';
 import 'home/screens/main_bounce_tab_bar.dart';
 import 'home/service/item_service.dart';
 import 'profile/screens/user_profile_view.dart';
 import 'profile/services/user_service.dart';
+import 'search/services/product_service.dart';
 import 'shopping/screens/confirmed_status_view.dart';
 import 'shopping/screens/order_view.dart';
 import 'states/theme_state.dart';
 import 'auth/screens/signin_view.dart';
+import 'wishlist/screen/wishlist_view.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,6 +27,8 @@ class FitsterApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        Provider<AppDatabase>(create: (_) => AppDatabase()),
+        ChangeNotifierProvider(create: (_) => ProductService()),
         ChangeNotifierProvider(create: (_) => UserService()),
         ChangeNotifierProvider(create: (_) => AuthService()),
         ChangeNotifierProvider(create: (_) => ItemService()),
@@ -43,6 +47,7 @@ class FitsterApp extends StatelessWidget {
               'order': (_) => OrderView(),
               'confirmed': (_) => ConfirmedStatusView(),
               'profile': (_) => UserProfileView(),
+              'wishlist': (_) => WishListView(),
             },
             title: 'Fitster',
             debugShowCheckedModeBanner: false,
