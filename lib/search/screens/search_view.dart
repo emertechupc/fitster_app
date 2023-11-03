@@ -2,41 +2,36 @@ import 'package:flutter/material.dart';
 
 import '../../utils/item_list.dart';
 
+const Map<int, String> genders = {1: 'Men', 2: 'Women', 3: 'Children'};
+
+const Map<int, String> brands = {
+  1: 'Adidas',
+  2: 'Nike',
+  3: 'Levi\'s',
+  4: 'Calvin Klein',
+  5: 'Gucci',
+  6: 'Ralph Lauren',
+  7: 'Puma',
+  8: 'Tommy Hilfiger',
+  9: 'Under Armour',
+  10: 'Gap',
+};
+
+const Map<int, String> categories = {
+  1: 'T-shirt',
+  2: 'Pants',
+  3: 'Dress',
+  4: 'Jeans',
+  5: 'Shirt',
+  6: 'Blouse',
+  7: 'Sweater',
+  8: 'Jacket',
+  9: 'Hoodie',
+  10: 'Short',
+};
+
 class SearchView extends StatelessWidget {
   const SearchView({super.key});
-
-  static const List<String> genders = [
-    'Male',
-    'Unisex',
-    'Female',
-  ];
-
-  static const List<String> brands = [
-    'Gucci',
-    'Nike',
-    'Adidas',
-    'Puma',
-    'Ralph Lauren',
-    'Tommy Hilfiger',
-  ];
-
-  static const List<String> styles = [
-    'Sports',
-    'Elegant',
-    'Casual',
-    'Oversize',
-    'Fashion',
-    'Vintage',
-  ];
-
-  static const List<String> types = [
-    'T-shirts',
-    'Shirts',
-    'Suits',
-    'Jeans',
-    'Joggers',
-    'Shorts',
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -46,22 +41,11 @@ class SearchView extends StatelessWidget {
           physics: BouncingScrollPhysics(),
           child: Column(
             children: const [
-              Padding(
-                padding: EdgeInsets.all(16.0),
-                child: SearchBar(
-                  leading: Icon(
-                    Icons.search,
-                  ),
-                  hintText: 'Search...',
-                ),
-              ),
-              ItemList(items: genders),
+              ItemMap(items: genders, isGenderId: true, isBrandId: false, isCategoryId: false,),
               _SectionTitle(child: Text('Brands')),
-              ItemList(items: brands),
-              _SectionTitle(child: Text('Styles')),
-              ItemList(items: styles),
-              _SectionTitle(child: Text('Types')),
-              ItemList(items: types),
+              ItemMap(items: brands, isBrandId: true, isCategoryId: false, isGenderId: false,),
+              _SectionTitle(child: Text('Categories')),
+              ItemMap(items: categories, isCategoryId: true, isBrandId: false, isGenderId: false,),
             ],
           ),
         ),
