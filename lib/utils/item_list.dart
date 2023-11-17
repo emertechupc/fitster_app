@@ -14,7 +14,9 @@ class _Item extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const ClothingListView(),
+            builder: (context) => ClothingListView(
+              clothingItemsType: child,
+            ),
           ),
         );
       },
@@ -61,7 +63,9 @@ class _ItemListState extends State<ItemList> {
         shrinkWrap: true,
         itemCount: widget.items.length,
         itemBuilder: (context, index) {
-          return _Item(child: widget.items[index]);
+          return _Item(
+              child: widget.items[index],
+          );
         },
         padding: const EdgeInsets.all(8),
       ),

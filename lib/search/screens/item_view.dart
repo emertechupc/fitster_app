@@ -1,11 +1,24 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:model_viewer_plus/model_viewer_plus.dart';
 
+import '../../fitting_room/screens/ar_camera_view.dart';
 import '../../fitting_room/screens/pose_detector_view.dart';
 
 class ItemView extends StatefulWidget {
-  const ItemView({super.key});
+  final String src3dModel;
+  final String productName;
+  final String price;
+  final String productBrandModel;
+  const ItemView({
+    Key? key,
+    required this.src3dModel,
+    required this.productName,
+    required this.price,
+    required this.productBrandModel,
+  }) : super(key: key);
 
   @override
   State<ItemView> createState() => _ItemViewState();
@@ -26,16 +39,34 @@ class _ItemViewState extends State<ItemView> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const Image(image: AssetImage('assets/men1.jpg')),
+              //test
+              //const Image(image: AssetImage('assets/men1.jpg')),
+              Container(
+                height: MediaQuery.of(context).size.height*0.41,
+                child: Stack(
+                    alignment: Alignment.topRight,
+                    children: [
+                      ModelViewer(
+                        src: widget.src3dModel,
+                        ar: true,
+                        arPlacement: ArPlacement.floor,
+                        autoRotate: true,
+                        cameraControls: true,
+                        arScale: ArScale.auto
+                      )
+                    ]
+                ),
+              ),
+              //end-test
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
+                    children: [
                       Text(
-                        "Men's t-shirt",
+                        widget.productName,
                         style: TextStyle(
                           fontSize: 30.0,
                           fontWeight: FontWeight.bold,
@@ -44,7 +75,7 @@ class _ItemViewState extends State<ItemView> {
                       Padding(
                         padding: EdgeInsets.only(top: 10.0),
                         child: Text(
-                          '\$29.90',
+                          widget.price,
                           style: TextStyle(
                             fontWeight: FontWeight.normal,
                             fontSize: 20.0,
@@ -74,8 +105,8 @@ class _ItemViewState extends State<ItemView> {
                 ],
               ),
               SizedBox(height: 10,),
-              const Text(
-                'Nike Sportswear',
+              Text(
+                widget.productBrandModel,
                 style: TextStyle(
                   fontSize: 18.0,
                   fontWeight: FontWeight.normal,
@@ -111,17 +142,18 @@ class _ItemViewState extends State<ItemView> {
                     .toList(),
               ),
               SizedBox(height: 10,),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const PoseDetectorView(),
-                    ),
-                  );
-                },
-                child: const Text('Try on', style: TextStyle(fontSize: 14)),
-              ),
+               /*ElevatedButton(
+                 onPressed: () {
+                   Navigator.push(
+                     context,
+                     MaterialPageRoute(
+                       *//* builder: (context) => const PoseDetectorView(), *//*
+                       builder:(context) => const ArCameraView(),
+                     ),
+                   );
+                 },
+                 child: const Text('Try on', style: TextStyle(fontSize: 14)),
+               ),*/
             ],
           ),
         ),

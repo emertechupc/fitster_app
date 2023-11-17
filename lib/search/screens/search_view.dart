@@ -7,7 +7,7 @@ class SearchView extends StatelessWidget {
 
   static const List<String> genders = [
     'Male',
-    'Unisex',
+    'Accessories',
     'Female',
   ];
 

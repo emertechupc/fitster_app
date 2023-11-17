@@ -1,26 +1,41 @@
 import 'package:flutter/material.dart';
 
+import '../../constants/clothing_items_data.dart';
 import '../../utils/clothing_item.dart';
 import 'item_view.dart';
 
 class ClothingListView extends StatefulWidget {
-  const ClothingListView({super.key});
+  final String clothingItemsType;
+  const ClothingListView({
+    Key? key,
+    required this.clothingItemsType,
+  }) : super(key: key);
 
   @override
   State<ClothingListView> createState() => _ClothingListViewState();
 }
 
 class _ClothingListViewState extends State<ClothingListView> {
-  static const List<ClothingItem> clothingItems = [
-    ClothingItem('assets/images/image_4.png', 'Men T-Shirt', 29.90),
-    ClothingItem('assets/images/image_5.png', 'Woman T-Shirt', 29.90),
-    ClothingItem('assets/images/image_6.png', 'Men T-Shirt', 29.90),
-    ClothingItem('assets/images/image_7.png', 'Woman T-Shirt', 29.90),
-    ClothingItem('assets/images/image_4.png', 'Men T-Shirt', 29.90),
-    ClothingItem('assets/images/image_5.png', 'Woman T-Shirt', 29.90),
-    ClothingItem('assets/images/image_6.png', 'Men T-Shirt', 29.90),
-    ClothingItem('assets/images/image_7.png', 'Woman T-Shirt', 29.90),
-  ];
+
+  List<ClothingItem> maleClothingItems = ClothingItemsData.maleClothingItems;
+  List<ClothingItem> femaleClothingItems = ClothingItemsData.femaleClothingItems;
+  List<ClothingItem> accessoriesClothingItems = ClothingItemsData.accessoriesClothingItems;
+
+  _clothingItemType (String type){
+    switch(type){
+      case 'Male':
+        return maleClothingItems;
+        break;
+      case 'Female':
+        return femaleClothingItems;
+        break;
+      case 'Accessories':
+        return accessoriesClothingItems;
+        break;
+      default:
+        return maleClothingItems;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,14 +64,19 @@ class _ClothingListViewState extends State<ClothingListView> {
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
               ),
-              itemCount: clothingItems.length,
+              itemCount: _clothingItemType(widget.clothingItemsType).length,
               itemBuilder: (BuildContext context, int index) {
                 return GestureDetector(
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const ItemView(),
+                        builder: (context) => ItemView(
+                          productName: _clothingItemType(widget.clothingItemsType)[index].productName,
+                          price: _clothingItemType(widget.clothingItemsType)[index].price.toString(),
+                          productBrandModel: _clothingItemType(widget.clothingItemsType)[index].productBrandModel,
+                          src3dModel: _clothingItemType(widget.clothingItemsType)[index].src3dModel
+                        ),
                       ),
                     );
                   },
@@ -67,7 +87,7 @@ class _ClothingListViewState extends State<ClothingListView> {
                         children: [
                           Expanded(
                             child: Image.asset(
-                              clothingItems[index].imagePath,
+                              _clothingItemType(widget.clothingItemsType)[index].imagePath,
                               width: 90,
                               height: 120,
                               fit: BoxFit.cover,
@@ -77,12 +97,12 @@ class _ClothingListViewState extends State<ClothingListView> {
                             height: 10,
                           ),
                           Text(
-                            clothingItems[index].name,
+                            _clothingItemType(widget.clothingItemsType)[index].productName,
                             style: const TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            '\$${clothingItems[index].price.toString()}',
+                            '\$${_clothingItemType(widget.clothingItemsType)[index].price.toString()}',
                             style: const TextStyle(fontSize: 16),
                           ),
                         ],
