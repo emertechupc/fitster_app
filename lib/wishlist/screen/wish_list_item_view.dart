@@ -71,7 +71,7 @@ class _WishItemViewState extends State<WishItemView> {
             final p = snapshot.data;
             return Scaffold(
               appBar: AppBar(
-                title: const Text('Fitster'),
+                title: const Text('Product Detail'),
                 centerTitle: true,
                 leading: IconButton(
                   onPressed: () {

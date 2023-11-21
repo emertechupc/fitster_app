@@ -9,7 +9,6 @@ import 'profile/screens/user_profile_view.dart';
 import 'profile/services/user_service.dart';
 import 'search/services/product_service.dart';
 import 'shopping/screens/confirmed_status_view.dart';
-import 'shopping/screens/order_view.dart';
 import 'states/theme_state.dart';
 import 'auth/screens/signin_view.dart';
 import 'wishlist/screen/wishlist_view.dart';
@@ -44,7 +43,7 @@ class FitsterApp extends StatelessWidget {
               'signin': (_) => SignInView(),
               'signup': (_) => SignUpView(),
               'home': (_) => MainPage(),
-              'order': (_) => OrderView(),
+              //'order': (_) => OrderView(),
               'confirmed': (_) => ConfirmedStatusView(),
               'profile': (_) => UserProfileView(),
               'wishlist': (_) => WishListView(),

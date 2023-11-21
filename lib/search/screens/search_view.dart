@@ -4,6 +4,8 @@ import '../../utils/item_list.dart';
 
 const Map<int, String> genders = {1: 'Men', 2: 'Women', 3: 'Children'};
 
+const Map<int, String> gendersImages = {1: 'assets/men.jpg', 2: 'assets/women.jpg', 3: 'assets/children.jpeg'};
+
 const Map<int, String> brands = {
   1: 'Adidas',
   2: 'Nike',
@@ -15,6 +17,19 @@ const Map<int, String> brands = {
   8: 'Tommy Hilfiger',
   9: 'Under Armour',
   10: 'Gap',
+};
+
+const Map<int, String> brandsImages = {
+  1: 'assets/brands/adidas.svg',
+  2: 'assets/brands/nike.svg',
+  3: 'assets/brands/levis.svg',
+  4: 'assets/brands/calvinklein.svg',
+  5: 'assets/brands/gucci.svg',
+  6: 'assets/brands/ralphlauren.svg',
+  7: 'assets/brands/puma.svg',
+  8: 'assets/brands/tommy-hilfiger.svg',
+  9: 'assets/brands/underarmour.svg',
+  10: 'assets/brands/gap.svg',
 };
 
 const Map<int, String> categories = {
@@ -30,6 +45,19 @@ const Map<int, String> categories = {
   10: 'Short',
 };
 
+const Map<int, String> categoriesImages = {
+  1: 'assets/tshirt.png',
+  2: 'assets/pants.png',
+  3: 'assets/dress.png',
+  4: 'assets/jeans.png',
+  5: 'assets/shirt.png',
+  6: 'assets/blouse.png',
+  7: 'assets/sweater.png',
+  8: 'assets/jacket.png',
+  9: 'assets/hoodie.png',
+  10: 'assets/short.png',
+};
+
 class SearchView extends StatelessWidget {
   const SearchView({super.key});
 
@@ -41,11 +69,33 @@ class SearchView extends StatelessWidget {
           physics: BouncingScrollPhysics(),
           child: Column(
             children: const [
-              ItemMap(items: genders, isGenderId: true, isBrandId: false, isCategoryId: false,),
+              SizedBox(
+                height: 10,
+              ),
+              _SectionTitle(child: Text('Gender')),
+              ItemMap(
+                items: genders,
+                isGenderId: true,
+                isBrandId: false,
+                isCategoryId: false,
+                itemsImages: gendersImages,
+              ),
               _SectionTitle(child: Text('Brands')),
-              ItemMap(items: brands, isBrandId: true, isCategoryId: false, isGenderId: false,),
+              ItemMap(
+                items: brands,
+                isBrandId: true,
+                isCategoryId: false,
+                isGenderId: false,
+                itemsImages: brandsImages,
+              ),
               _SectionTitle(child: Text('Categories')),
-              ItemMap(items: categories, isCategoryId: true, isBrandId: false, isGenderId: false,),
+              ItemMap(
+                items: categories,
+                isCategoryId: true,
+                isBrandId: false,
+                isGenderId: false,
+                itemsImages: categoriesImages,
+              ),
             ],
           ),
         ),

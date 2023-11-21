@@ -1,20 +1,50 @@
 import 'package:flutter/material.dart';
+import '../../globals.dart' as globals;
+import '../../database/database.dart';
 
+// ignore: must_be_immutable
 class OrderView extends StatefulWidget {
-  const OrderView({super.key});
+  List<CartData>? list;
+  double totalProducts;
+  OrderView({super.key, required this.totalProducts, required this.list});
 
   @override
   State<OrderView> createState() => _OrderViewState();
 }
 
 class _OrderViewState extends State<OrderView> {
+  late AppDatabase database;
   static const values = <String>['Priority', 'Standard', 'Economic'];
   static const mapPrices = {
-    'Priority': '+ S/.50.00',
-    'Standard': '+ S/.30.00',
-    'Economic': '+ S/.0.00',
+    'Priority': 50.00,
+    'Standard': 30.00,
+    'Economic': 0.00,
   };
   String selectedValue = values.first;
+  double? valueShipping;
+  double getCartTotal() {
+    double total = 0.0;
+    for (int i = 0; i < widget.list!.length; i++) {
+      total += widget.list![i].quantity * widget.list![i].price;
+    }
+    return total;
+  }
+
+  double? updateShipping() {
+    valueShipping = mapPrices[selectedValue];
+
+    return valueShipping;
+  }
+
+  double getTotal(){
+    return updateShipping()! + getCartTotal() + 30;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    database = AppDatabase();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +129,7 @@ class _OrderViewState extends State<OrderView> {
                 ),
               ),
               buildRadios(),
-              Container(
+              /*Container(
                 decoration: BoxDecoration(
                     border: Border(
                         bottom: BorderSide(
@@ -148,7 +178,7 @@ class _OrderViewState extends State<OrderView> {
                     ),
                   ),
                 ),
-              ),
+              ),*/
               Container(
                 decoration: BoxDecoration(
                   border: Border(
@@ -168,12 +198,12 @@ class _OrderViewState extends State<OrderView> {
               Container(
                 margin: EdgeInsets.all(10.0),
                 child: Column(
-                  children: const [
+                  children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text('Products'),
-                        Text('S/.725.00'),
+                        Text('S/.${getCartTotal().toStringAsFixed(2)}'),
                       ],
                     ),
                     SizedBox(
@@ -183,7 +213,7 @@ class _OrderViewState extends State<OrderView> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text('Shipping'),
-                        Text('S/.50.00'),
+                        Text('S/. ${updateShipping()}'),
                       ],
                     ),
                     SizedBox(
@@ -191,7 +221,7 @@ class _OrderViewState extends State<OrderView> {
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
+                      children: const [
                         Text('Service'),
                         Text('S/.30.00'),
                       ],
@@ -208,15 +238,16 @@ class _OrderViewState extends State<OrderView> {
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: [
                       Text('Total'),
-                      Text('S/.250.00'),
+                      Text('S/. ${getTotal().toStringAsFixed(2)}'),
                     ],
                   ),
                   SizedBox(
                     width: 100,
                     child: ElevatedButton(
                         onPressed: () {
+                          database.deleteAllByUserId(globals.id);
                           Navigator.pushReplacementNamed(context, 'confirmed');
                         },
                         child: Text(
@@ -258,8 +289,8 @@ class _OrderViewState extends State<OrderView> {
                     style: TextStyle(
                         color: Theme.of(context).textTheme.bodyMedium?.color),
                   ),
-                  secondary: Text(mapPrices[value]!),
-                  onChanged: (value) => setState(() => selectedValue = value!),
+                  secondary: Text('+ S/. ${mapPrices[value]!}'),
+                  onChanged: (value) => setState(() => selectedValue = value!,),
                 ),
               ),
             );
@@ -288,7 +319,8 @@ class _OrderViewState extends State<OrderView> {
               child: ListBody(
                 children: <Widget>[
                   TextField(
-                    style: TextStyle(color: Theme.of(context).textTheme.bodyMedium?.color),
+                    style: TextStyle(
+                        color: Theme.of(context).textTheme.bodyMedium?.color),
                     autofocus: true,
                     decoration: InputDecoration(
                       labelText: 'Address',
