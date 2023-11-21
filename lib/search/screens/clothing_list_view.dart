@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import '../../utils/clothing_item.dart';
+import '../model/product.dart';
 import '../services/product_service.dart';
 import 'item_view.dart';
+import '../../constants/clothing_items_data.dart';
+import 'item_view_3d.dart';
 
 class ClothingListView extends StatefulWidget {
   final int genderId;
@@ -9,14 +13,15 @@ class ClothingListView extends StatefulWidget {
   final bool isGenderId;
   final bool isBrandId;
   final bool isCategoryId;
-  const ClothingListView(
-      {super.key,
-      required this.brandId,
-      required this.isBrandId,
-      required this.categoryId,
-      required this.isCategoryId,
-      required this.genderId,
-      required this.isGenderId});
+  const ClothingListView({
+    super.key,
+    required this.brandId,
+    required this.isBrandId,
+    required this.categoryId,
+    required this.isCategoryId,
+    required this.genderId,
+    required this.isGenderId,
+  });
 
   @override
   State<ClothingListView> createState() => _ClothingListViewState();
@@ -24,10 +29,27 @@ class ClothingListView extends StatefulWidget {
 
 class _ClothingListViewState extends State<ClothingListView> {
   final productService = ProductService();
+  List<ClothingItem> maleClothingItems = ClothingItemsData.maleClothingItems;
+  List<ClothingItem> femaleClothingItems =
+      ClothingItemsData.femaleClothingItems;
+
+  List<dynamic> listaFinal = [];
+  clothingItemType(int type) {
+    switch (type) {
+      case 1:
+        return maleClothingItems;
+      case 2:
+        return femaleClothingItems;
+      default:
+        return femaleClothingItems;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final productFuture = productService.getAllProducts();
     late List<dynamic>? data;
+    late List<dynamic>? localData;
 
     return FutureBuilder(
       future: productFuture,
@@ -38,16 +60,36 @@ class _ClothingListViewState extends State<ClothingListView> {
             data = products
                 ?.where((element) => element.genderId == widget.genderId)
                 .toList();
+            localData = clothingItemType(widget.genderId);
+            //data?.add(localData?[0]);
+            listaFinal.addAll(data!);
+            listaFinal.addAll(localData!);
           }
           if (widget.isBrandId) {
             data = products
                 ?.where((element) => element.brandId == widget.brandId)
                 .toList();
+            localData = maleClothingItems
+                .where((element) => element.brandId == widget.brandId)
+                .toList();
+            localData?.addAll(femaleClothingItems
+                .where((element) => element.brandId == widget.brandId)
+                .toList());
+            listaFinal.addAll(data!);
+            listaFinal.addAll(localData!);
           }
           if (widget.isCategoryId) {
             data = products
                 ?.where((element) => element.categoryId == widget.categoryId)
                 .toList();
+            localData = maleClothingItems
+                .where((element) => element.categoryId == widget.categoryId)
+                .toList();
+            localData?.addAll(femaleClothingItems
+                .where((element) => element.categoryId == widget.categoryId)
+                .toList());
+            listaFinal.addAll(data!);
+            listaFinal.addAll(localData!);
           }
 
           return Scaffold(
@@ -77,17 +119,35 @@ class _ClothingListViewState extends State<ClothingListView> {
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10,
                     ),
-                    itemCount: data?.length,
+                    itemCount: listaFinal.length,
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
                         onTap: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  ItemView(product: data?[index]),
-                            ),
-                          );
+                          var selectedItem = listaFinal[index];
+
+                          if (selectedItem is Product) {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    ItemView(product: selectedItem),
+                              ),
+                            );
+                          } else if (selectedItem is ClothingItem) {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ItemView3d(
+                                  src3dModel: listaFinal[index].model3D,
+                                  productName: listaFinal[index].name,
+                                  price: listaFinal[index].price.toString(),
+                                  productBrandModel:
+                                      listaFinal[index].productBrandModel,
+                                  rating: listaFinal[index].rating,
+                                ),
+                              ),
+                            );
+                          }
                         },
                         child: Card(
                           child: Padding(
@@ -95,24 +155,31 @@ class _ClothingListViewState extends State<ClothingListView> {
                             child: Column(
                               children: [
                                 Expanded(
-                                  child: Image.network(
-                                    data?[index].image,
-                                    width: 70,
-                                    height: 120,
-                                    fit: BoxFit.fill,
-                                  ),
+                                  child: listaFinal[index] is Product
+                                      ? Image.network(
+                                          listaFinal[index].image,
+                                          width: 70,
+                                          height: 120,
+                                          fit: BoxFit.fill,
+                                        )
+                                      : listaFinal[index] is ClothingItem
+                                          ? Image.asset(
+                                              listaFinal[index].image,
+                                              fit: BoxFit.fill,
+                                            )
+                                          : Container(),
                                 ),
                                 const SizedBox(
                                   height: 10,
                                 ),
                                 Text(
-                                  data?[index].name,
+                                  listaFinal[index].name,
                                   style: const TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold),
                                 ),
                                 Text(
-                                  'S/. ${data?[index].price}',
+                                  'S/. ${listaFinal[index].price}',
                                   style: const TextStyle(fontSize: 16),
                                 ),
                               ],

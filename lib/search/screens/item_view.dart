@@ -61,7 +61,7 @@ class _ItemViewState extends State<ItemView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Fitster'),
+        title: const Text('Product Detail'),
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
