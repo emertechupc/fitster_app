@@ -34,11 +34,25 @@ dependencies:
   # google_mlkit_object_detection: ^0.7.0
   google_mlkit_pose_detection: ^0.7.0
   flutter_rating_bar: ^4.0.1
+  provider: ^6.0.5
+  card_swiper: ^3.0.1
+  http: ^1.1.0
+  animate_do: ^3.1.2
+  flutter_svg: ^2.0.8
+  drift: ^2.13.0
+  sqlite3_flutter_libs: ^0.5.0
+  path_provider: ^2.0.0
+  path: ^1.8.3
+  another_flushbar: ^1.12.30
+  arcore_flutter_plugin: ^0.1.0
+  vector_math: ^2.1.4
+  model_viewer_plus: ^1.6.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  drift_dev: ^2.13.0
+  build_runner: ^2.4.6
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
@@ -62,6 +76,13 @@ flutter:
   assets:
     - assets/
     - assets/images/
+    - assets/images/female/
+    - assets/images/male/
+    - assets/ads/
+    - assets/brands/
+    - assets/ar-clothes/3d-objects/female/
+    - assets/ar-clothes/3d-objects/male/
+    - assets/ar-clothes/textures/    
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

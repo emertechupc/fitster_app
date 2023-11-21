@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
-import 'views/home_page.dart';
+import 'package:provider/provider.dart';
+import 'auth/screens/signup_view.dart';
+import 'auth/services/auth_service.dart';
+import 'database/database.dart';
+import 'home/screens/main_bounce_tab_bar.dart';
+import 'home/service/item_service.dart';
+import 'profile/screens/user_profile_view.dart';
+import 'profile/services/user_service.dart';
+import 'search/services/product_service.dart';
+import 'shopping/screens/confirmed_status_view.dart';
+import 'states/theme_state.dart';
+import 'auth/screens/signin_view.dart';
+import 'wishlist/screen/wishlist_view.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const FitsterApp());
+  runApp(FitsterApp());
 }
 
 class FitsterApp extends StatelessWidget {
@@ -14,20 +24,36 @@ class FitsterApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Fitster',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        appBarTheme: const AppBarTheme(
-          systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarColor: Colors.blue,
-            statusBarIconBrightness: Brightness.light,
-            statusBarBrightness: Brightness.dark,
-          ),
+    return MultiProvider(
+      providers: [
+        Provider<AppDatabase>(create: (_) => AppDatabase()),
+        ChangeNotifierProvider(create: (_) => ProductService()),
+        ChangeNotifierProvider(create: (_) => UserService()),
+        ChangeNotifierProvider(create: (_) => AuthService()),
+        ChangeNotifierProvider(create: (_) => ItemService()),
+        ChangeNotifierProvider(
+          create: (_) => ThemeState(),
         ),
+      ],
+      child: Consumer<ThemeState>(
+        builder: (context, state, child) {
+          return MaterialApp(
+            initialRoute: 'signin',
+            routes: {
+              'signin': (_) => SignInView(),
+              'signup': (_) => SignUpView(),
+              'home': (_) => MainPage(),
+              //'order': (_) => OrderView(),
+              'confirmed': (_) => ConfirmedStatusView(),
+              'profile': (_) => UserProfileView(),
+              'wishlist': (_) => WishListView(),
+            },
+            title: 'Fitster',
+            debugShowCheckedModeBanner: false,
+            theme: state.currentTheme,
+          );
+        },
       ),
-      home: const HomePage(),
     );
   }
 }
