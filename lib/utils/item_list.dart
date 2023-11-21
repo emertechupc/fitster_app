@@ -55,7 +55,7 @@ class _Item extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            if(isBrandId)
+            if (isBrandId)
               Center(
                 child: SvgPicture.asset(
                   image!,
@@ -63,7 +63,7 @@ class _Item extends StatelessWidget {
                   height: 100,
                 ),
               ),
-            if(isGenderId || isCategoryId)
+            if (isGenderId || isCategoryId)
               Center(
                 child: Image.asset(
                   image!,
@@ -71,11 +71,15 @@ class _Item extends StatelessWidget {
                   height: 100,
                 ),
               ),
-            if(isGenderId || isCategoryId)
-            Center(
-              child: Text(child!),
-            )
-            
+            if (isGenderId || isCategoryId)
+              Center(
+                child: Text(
+                  child!,
+                  style: TextStyle(
+                    color: Color(0xFF4B64F2),
+                  ),
+                ),
+              )
           ],
         ),
       ),
