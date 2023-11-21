@@ -1,7 +1,25 @@
 class ClothingItem {
-  final String imagePath;
-  final String name;
-  final double price;
+  String image;
+  String name;
+  double price;
+  double rating;
+  int? categoryId;
+  String? size;
+  int? genderId;
+  int? brandId;
+  String? productBrandModel;
+  String? model3D;
 
-  const ClothingItem(this.imagePath, this.name, this.price);
+  ClothingItem({
+    required this.image,
+    required this.name,
+    required this.price,
+    this.size,
+    required this.rating,
+    this.brandId,
+    this.categoryId,
+    this.genderId,
+    this.productBrandModel,
+    this.model3D,
+});
 }
