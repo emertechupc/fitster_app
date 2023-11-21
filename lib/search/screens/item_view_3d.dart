@@ -37,12 +37,6 @@ class _ItemView3dState extends State<ItemView3d> {
               Icons.favorite_border,
             ),
           ),
-          IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.shopping_cart_outlined,
-                
-              )),
         ],
       ),
       body: Center(

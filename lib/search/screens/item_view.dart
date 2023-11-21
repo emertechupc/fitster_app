@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
+import '../../database/cart_item_model.dart';
 import '../../database/database.dart';
 import '../../database/favorite_model.dart';
 import '../../fitting_room/screens/pose_detector_view.dart';
@@ -22,6 +23,20 @@ class _ItemViewState extends State<ItemView> {
 
   void onSizeChange(String size) {}
 
+  void _addCart() {
+    database.insertCartItem(
+      CartItem(
+        image: widget.product.image,
+        productId: widget.product.id!,
+        name: widget.product.name,
+        price: widget.product.price,
+        size: 'M',
+        quantity: 1,
+        userId: globals.id,
+      ),
+    );
+  }
+
   void _favorite() {
     if (isFavorite) {
       database.deleteItem(widget.product.id!);
@@ -37,12 +52,6 @@ class _ItemViewState extends State<ItemView> {
 
     setState(() {
       isFavorite = !isFavorite;
-    });
-  }
-
-  void _isInTheCart() {
-    setState(() {
-      isInTheCart = !isInTheCart;
     });
   }
 
@@ -84,152 +93,159 @@ class _ItemViewState extends State<ItemView> {
                     Icons.favorite_border,
                   ),
           ),
-          IconButton(
-            onPressed: () {
-              _isInTheCart();
-            },
-            icon: isInTheCart
-                ? Icon(
-                    Icons.shopping_cart,
-                    shadows: const [Shadow(blurRadius: 2)],
-                  )
-                : Icon(
-                    Icons.shopping_cart_outlined,
-                  ),
-          ),
         ],
       ),
-      body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                  width: MediaQuery.of(context).size.width / 1.5,
-                  height: MediaQuery.of(context).size.height / 3,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(
-                        widget.product.image,
-                      ),
-                    ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width / 1.5,
+              height: MediaQuery.of(context).size.height / 3,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(
+                    widget.product.image,
                   ),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 8.0),
-                            child: Text(
-                              widget.product.name,
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 10.0),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
                           child: Text(
-                            'S/. ${widget.product.price}',
+                            widget.product.name,
                             style: TextStyle(
-                              fontWeight: FontWeight.normal,
                               fontSize: 20.0,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        RatingBarIndicator(
-                          rating: widget.product.rating,
-                          itemBuilder: (context, _) => Icon(
-                            Icons.star,
-                            color: Colors.yellow,
-                          ),
-                          itemCount: 5,
-                          itemSize: MediaQuery.sizeOf(context).height / 40,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10.0),
-                          child: Text('(${widget.product.rating})'),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                const Text(
-                  'Nike Sportswear',
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.normal,
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  widget.product.description!,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.w300,
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                const Text(
-                  'Select size',
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.normal,
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                OverflowBar(
-                  alignment: MainAxisAlignment.center,
-                  children: ['XS', 'S', 'M', 'L', 'XL']
-                      .map(
-                        (size) => _SizeButton(
-                          onPressed: () => onSizeChange(size),
-                          child: Text(size),
-                        ),
-                      )
-                      .toList(),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const PoseDetectorView(),
                       ),
-                    );
-                  },
-                  child: const Text('Try on', style: TextStyle(fontSize: 14)),
+                      Padding(
+                        padding: EdgeInsets.only(top: 10.0),
+                        child: Text(
+                          'S/. ${widget.product.price}',
+                          style: TextStyle(
+                            fontWeight: FontWeight.normal,
+                            fontSize: 20.0,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      RatingBarIndicator(
+                        rating: widget.product.rating,
+                        itemBuilder: (context, _) => Icon(
+                          Icons.star,
+                          color: Colors.yellow,
+                        ),
+                        itemCount: 5,
+                        itemSize: MediaQuery.sizeOf(context).height / 40,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10.0),
+                        child: Text('(${widget.product.rating})'),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              'Nike Sportswear',
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.normal,
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+              child: Text(
+                widget.product.description!,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.w300,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            const Text(
+              'Select size',
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.normal,
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            OverflowBar(
+              alignment: MainAxisAlignment.center,
+              children: ['XS', 'S', 'M', 'L', 'XL']
+                  .map(
+                    (size) => _SizeButton(
+                      onPressed: () => onSizeChange(size),
+                      child: Text(size),
+                    ),
+                  )
+                  .toList(),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const PoseDetectorView(),
+                  ),
+                );
+              },
+              child: const Text('Try on', style: TextStyle(fontSize: 14)),
+            ),
+            Spacer(),
+            Row(
+              children: [
+                Expanded(
+                  child: SizedBox(
+                    height: 60,
+                    child: ElevatedButton(
+                      onPressed: _addCart,
+                      child: Text(
+                        'Add to Cart',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ),
+                  ),
                 ),
               ],
-            ),
-          ),
+            )
+          ],
         ),
       ),
     );

@@ -102,7 +102,7 @@ class _ClothingListViewState extends State<ClothingListView> {
             body: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Padding(
+                Padding(
                   padding: EdgeInsets.all(16.0),
                   child: SearchBar(
                     leading: Icon(
