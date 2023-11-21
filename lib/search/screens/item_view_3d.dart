@@ -49,15 +49,19 @@ class _ItemView3dState extends State<ItemView3d> {
               //const Image(image: AssetImage('assets/men1.jpg')),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.41,
-                child: Stack(alignment: Alignment.topRight, children: [
-                  ModelViewer(
+                child: Stack(
+                  alignment: Alignment.topRight,
+                  children: [
+                    ModelViewer(
                       src: widget.src3dModel,
                       ar: true,
                       arPlacement: ArPlacement.floor,
                       autoRotate: true,
                       cameraControls: true,
-                      arScale: ArScale.auto)
-                ]),
+                      arScale: ArScale.auto,
+                    ),
+                  ],
+                ),
               ),
               //end-test
               Column(
