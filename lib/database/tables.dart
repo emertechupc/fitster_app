@@ -7,5 +7,6 @@ class Favorites extends Table {
   TextColumn get name => text()();
   RealColumn get price => real()();
   RealColumn get rating => real()();
+  TextColumn get src3dModel => text()();
   IntColumn get userId => integer()();
 }

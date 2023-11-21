@@ -44,6 +44,12 @@ class $FavoritesTable extends Favorites
   late final GeneratedColumn<double> rating = GeneratedColumn<double>(
       'rating', aliasedName, false,
       type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _src3dModelMeta =
+      const VerificationMeta('src3dModel');
+  @override
+  late final GeneratedColumn<String> src3dModel = GeneratedColumn<String>(
+      'src3d_model', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
   @override
   late final GeneratedColumn<int> userId = GeneratedColumn<int>(
@@ -51,7 +57,7 @@ class $FavoritesTable extends Favorites
       type: DriftSqlType.int, requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns =>
-      [id, productId, image, name, price, rating, userId];
+      [id, productId, image, name, price, rating, src3dModel, userId];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -95,6 +101,14 @@ class $FavoritesTable extends Favorites
     } else if (isInserting) {
       context.missing(_ratingMeta);
     }
+    if (data.containsKey('src3d_model')) {
+      context.handle(
+          _src3dModelMeta,
+          src3dModel.isAcceptableOrUnknown(
+              data['src3d_model']!, _src3dModelMeta));
+    } else if (isInserting) {
+      context.missing(_src3dModelMeta);
+    }
     if (data.containsKey('user_id')) {
       context.handle(_userIdMeta,
           userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta));
@@ -122,6 +136,8 @@ class $FavoritesTable extends Favorites
           .read(DriftSqlType.double, data['${effectivePrefix}price'])!,
       rating: attachedDatabase.typeMapping
           .read(DriftSqlType.double, data['${effectivePrefix}rating'])!,
+      src3dModel: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}src3d_model'])!,
       userId: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}user_id'])!,
     );
@@ -140,6 +156,7 @@ class Favorite extends DataClass implements Insertable<Favorite> {
   final String name;
   final double price;
   final double rating;
+  final String src3dModel;
   final int userId;
   const Favorite(
       {required this.id,
@@ -148,6 +165,7 @@ class Favorite extends DataClass implements Insertable<Favorite> {
       required this.name,
       required this.price,
       required this.rating,
+      required this.src3dModel,
       required this.userId});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -158,6 +176,7 @@ class Favorite extends DataClass implements Insertable<Favorite> {
     map['name'] = Variable<String>(name);
     map['price'] = Variable<double>(price);
     map['rating'] = Variable<double>(rating);
+    map['src3d_model'] = Variable<String>(src3dModel);
     map['user_id'] = Variable<int>(userId);
     return map;
   }
@@ -170,6 +189,7 @@ class Favorite extends DataClass implements Insertable<Favorite> {
       name: Value(name),
       price: Value(price),
       rating: Value(rating),
+      src3dModel: Value(src3dModel),
       userId: Value(userId),
     );
   }
@@ -184,6 +204,7 @@ class Favorite extends DataClass implements Insertable<Favorite> {
       name: serializer.fromJson<String>(json['name']),
       price: serializer.fromJson<double>(json['price']),
       rating: serializer.fromJson<double>(json['rating']),
+      src3dModel: serializer.fromJson<String>(json['src3dModel']),
       userId: serializer.fromJson<int>(json['userId']),
     );
   }
@@ -197,6 +218,7 @@ class Favorite extends DataClass implements Insertable<Favorite> {
       'name': serializer.toJson<String>(name),
       'price': serializer.toJson<double>(price),
       'rating': serializer.toJson<double>(rating),
+      'src3dModel': serializer.toJson<String>(src3dModel),
       'userId': serializer.toJson<int>(userId),
     };
   }
@@ -208,6 +230,7 @@ class Favorite extends DataClass implements Insertable<Favorite> {
           String? name,
           double? price,
           double? rating,
+          String? src3dModel,
           int? userId}) =>
       Favorite(
         id: id ?? this.id,
@@ -216,6 +239,7 @@ class Favorite extends DataClass implements Insertable<Favorite> {
         name: name ?? this.name,
         price: price ?? this.price,
         rating: rating ?? this.rating,
+        src3dModel: src3dModel ?? this.src3dModel,
         userId: userId ?? this.userId,
       );
   @override
@@ -227,14 +251,15 @@ class Favorite extends DataClass implements Insertable<Favorite> {
           ..write('name: $name, ')
           ..write('price: $price, ')
           ..write('rating: $rating, ')
+          ..write('src3dModel: $src3dModel, ')
           ..write('userId: $userId')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, productId, image, name, price, rating, userId);
+  int get hashCode => Object.hash(
+      id, productId, image, name, price, rating, src3dModel, userId);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -245,6 +270,7 @@ class Favorite extends DataClass implements Insertable<Favorite> {
           other.name == this.name &&
           other.price == this.price &&
           other.rating == this.rating &&
+          other.src3dModel == this.src3dModel &&
           other.userId == this.userId);
 }
 
@@ -255,6 +281,7 @@ class FavoritesCompanion extends UpdateCompanion<Favorite> {
   final Value<String> name;
   final Value<double> price;
   final Value<double> rating;
+  final Value<String> src3dModel;
   final Value<int> userId;
   const FavoritesCompanion({
     this.id = const Value.absent(),
@@ -263,6 +290,7 @@ class FavoritesCompanion extends UpdateCompanion<Favorite> {
     this.name = const Value.absent(),
     this.price = const Value.absent(),
     this.rating = const Value.absent(),
+    this.src3dModel = const Value.absent(),
     this.userId = const Value.absent(),
   });
   FavoritesCompanion.insert({
@@ -272,12 +300,14 @@ class FavoritesCompanion extends UpdateCompanion<Favorite> {
     required String name,
     required double price,
     required double rating,
+    required String src3dModel,
     required int userId,
   })  : productId = Value(productId),
         image = Value(image),
         name = Value(name),
         price = Value(price),
         rating = Value(rating),
+        src3dModel = Value(src3dModel),
         userId = Value(userId);
   static Insertable<Favorite> custom({
     Expression<int>? id,
@@ -286,6 +316,7 @@ class FavoritesCompanion extends UpdateCompanion<Favorite> {
     Expression<String>? name,
     Expression<double>? price,
     Expression<double>? rating,
+    Expression<String>? src3dModel,
     Expression<int>? userId,
   }) {
     return RawValuesInsertable({
@@ -295,6 +326,7 @@ class FavoritesCompanion extends UpdateCompanion<Favorite> {
       if (name != null) 'name': name,
       if (price != null) 'price': price,
       if (rating != null) 'rating': rating,
+      if (src3dModel != null) 'src3d_model': src3dModel,
       if (userId != null) 'user_id': userId,
     });
   }
@@ -306,6 +338,7 @@ class FavoritesCompanion extends UpdateCompanion<Favorite> {
       Value<String>? name,
       Value<double>? price,
       Value<double>? rating,
+      Value<String>? src3dModel,
       Value<int>? userId}) {
     return FavoritesCompanion(
       id: id ?? this.id,
@@ -314,6 +347,7 @@ class FavoritesCompanion extends UpdateCompanion<Favorite> {
       name: name ?? this.name,
       price: price ?? this.price,
       rating: rating ?? this.rating,
+      src3dModel: src3dModel ?? this.src3dModel,
       userId: userId ?? this.userId,
     );
   }
@@ -339,6 +373,9 @@ class FavoritesCompanion extends UpdateCompanion<Favorite> {
     if (rating.present) {
       map['rating'] = Variable<double>(rating.value);
     }
+    if (src3dModel.present) {
+      map['src3d_model'] = Variable<String>(src3dModel.value);
+    }
     if (userId.present) {
       map['user_id'] = Variable<int>(userId.value);
     }
@@ -354,6 +391,7 @@ class FavoritesCompanion extends UpdateCompanion<Favorite> {
           ..write('name: $name, ')
           ..write('price: $price, ')
           ..write('rating: $rating, ')
+          ..write('src3dModel: $src3dModel, ')
           ..write('userId: $userId')
           ..write(')'))
         .toString();

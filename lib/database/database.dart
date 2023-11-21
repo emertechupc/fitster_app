@@ -25,11 +25,12 @@ class AppDatabase extends _$AppDatabase {
 
   Future<int> insertItem(FavoriteModel item) {
     final entity = FavoritesCompanion(
-      productId: Value(item.productId),
+      productId: Value(item.productId ?? 0),
       image: Value(item.image!),
       name: Value(item.name!),
       price: Value(item.price!),
       rating: Value(item.rating!),
+      src3dModel: Value(item.src3dModel ?? ''),
       userId: Value(item.userId),
     );
 
