@@ -26,7 +26,7 @@ class _WishListViewState extends State<WishListView> {
     final pFuture = database.getFavoriteProducts(globals.id);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Fitster'),
+        title: Text('Wish List'),
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
@@ -38,13 +38,7 @@ class _WishListViewState extends State<WishListView> {
       body: SafeArea(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Text(
-                'Wish List',
-                style: TextStyle(fontSize: 20),
-              ),
-            ),
+            SizedBox(height: 10,),
             FutureBuilder<List<Favorite>>(
               future: pFuture,
               builder: (context, snapshot) {
